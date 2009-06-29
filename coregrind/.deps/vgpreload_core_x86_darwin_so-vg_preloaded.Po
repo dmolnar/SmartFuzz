@@ -1,0 +1,77 @@
+vgpreload_core_x86_darwin_so-vg_preloaded.o \
+  vgpreload_core_x86_darwin_so-vg_preloaded.o: vg_preloaded.c \
+  pub_core_basics.h ../include/pub_tool_basics.h \
+  ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../VEX/pub/libvex.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_ir.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_guest_x86.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_emwarn.h /usr/include/setjmp.h \
+  /usr/include/machine/setjmp.h /usr/include/i386/setjmp.h \
+  /usr/include/sys/cdefs.h pub_core_clreq.h ../include/pub_tool_clreq.h \
+  ../include/valgrind.h pub_core_debuginfo.h \
+  ../include/pub_tool_debuginfo.h pub_core_redir.h \
+  ../include/pub_tool_redir.h /usr/include/string.h /usr/include/_types.h \
+  /usr/include/sys/_types.h /usr/include/machine/_types.h \
+  /usr/include/i386/_types.h /usr/include/crt_externs.h \
+  /usr/include/stdio.h
+
+pub_core_basics.h:
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../VEX/pub/libvex.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_ir.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_guest_x86.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_emwarn.h:
+
+/usr/include/setjmp.h:
+
+/usr/include/machine/setjmp.h:
+
+/usr/include/i386/setjmp.h:
+
+/usr/include/sys/cdefs.h:
+
+pub_core_clreq.h:
+
+../include/pub_tool_clreq.h:
+
+../include/valgrind.h:
+
+pub_core_debuginfo.h:
+
+../include/pub_tool_debuginfo.h:
+
+pub_core_redir.h:
+
+../include/pub_tool_redir.h:
+
+/usr/include/string.h:
+
+/usr/include/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/crt_externs.h:
+
+/usr/include/stdio.h:

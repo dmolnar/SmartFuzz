@@ -1,0 +1,20 @@
+libcoregrind_x86_darwin_a-dispatch-x86-darwin.o \
+  libcoregrind_x86_darwin_a-dispatch-x86-darwin.o:  \
+ m_dispatch/dispatch-x86-darwin.S pub_core_basics_asm.h \
+  ../include/pub_tool_basics_asm.h ../config.h pub_core_dispatch_asm.h \
+  ../VEX/pub/libvex_trc_values.h pub_core_transtab_asm.h \
+  ../VEX/pub/libvex_guest_offsets.h
+
+pub_core_basics_asm.h:
+
+../include/pub_tool_basics_asm.h:
+
+../config.h:
+
+pub_core_dispatch_asm.h:
+
+../VEX/pub/libvex_trc_values.h:
+
+pub_core_transtab_asm.h:
+
+../VEX/pub/libvex_guest_offsets.h:

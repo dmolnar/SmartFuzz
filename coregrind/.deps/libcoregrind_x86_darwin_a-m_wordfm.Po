@@ -1,0 +1,57 @@
+libcoregrind_x86_darwin_a-m_wordfm.o libcoregrind_x86_darwin_a-m_wordfm.o:  \
+ m_wordfm.c pub_core_basics.h ../include/pub_tool_basics.h \
+  ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../VEX/pub/libvex.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_ir.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_guest_x86.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_emwarn.h /usr/include/setjmp.h \
+  /usr/include/machine/setjmp.h /usr/include/i386/setjmp.h \
+  /usr/include/sys/cdefs.h pub_core_libcassert.h \
+  ../include/pub_tool_libcassert.h pub_core_libcbase.h \
+  ../include/pub_tool_libcbase.h pub_core_wordfm.h \
+  ../include/pub_tool_wordfm.h
+
+pub_core_basics.h:
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../VEX/pub/libvex.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_ir.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_guest_x86.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_emwarn.h:
+
+/usr/include/setjmp.h:
+
+/usr/include/machine/setjmp.h:
+
+/usr/include/i386/setjmp.h:
+
+/usr/include/sys/cdefs.h:
+
+pub_core_libcassert.h:
+
+../include/pub_tool_libcassert.h:
+
+pub_core_libcbase.h:
+
+../include/pub_tool_libcbase.h:
+
+pub_core_wordfm.h:
+
+../include/pub_tool_wordfm.h:

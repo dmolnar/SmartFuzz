@@ -1,0 +1,105 @@
+usage: valgrind [options] prog-and-args
+
+  common user options for all Valgrind tools, with defaults in [ ]:
+    --tool=<name>             use the Valgrind tool named <name> [memcheck]
+    -h --help                 show this message
+    --help-debug              show this message, plus debugging options
+    --version                 show version
+    -q --quiet                run silently; only print error msgs
+    -v --verbose              be more verbose, incl counts of errors
+    --trace-children=no|yes   Valgrind-ise child processes (follow execve)? [no]
+    --child-silent-after-fork=no|yes  omit child output between fork & exec? [no]
+    --track-fds=no|yes        track open file descriptors? [no]
+    --time-stamp=no|yes       add timestamps to log messages? [no]
+    --log-fd=<number>         log messages to file descriptor [2=stderr]
+    --log-file=<file>         log messages to <file>
+    --log-socket=ipaddr:port  log messages to socket ipaddr:port
+
+  uncommon user options for all Valgrind tools:
+    --run-libc-freeres=no|yes free up glibc memory at exit? [yes]
+    --sim-hints=hint1,hint2,...  known hints:
+                                 lax-ioctls, enable-outer [none]
+    --show-emwarns=no|yes     show warnings about emulation limits? [no]
+    --smc-check=none|stack|all  checks for self-modifying code: none,
+                              only for code found in stacks, or all [stack]
+    --kernel-variant=variant1,variant2,...  known variants: bproc [none]
+                              handle non-standard kernel variants
+    --read-var-info=yes|no    read debug info on stack and global variables
+                              and use it to print better error messages in
+                              tools that make use of it (Memcheck, Helgrind)
+
+  user options for Valgrind tools that report errors:
+    --xml=yes                 all output is in XML (some tools only)
+    --xml-user-comment=STR    copy STR verbatim to XML output
+    --demangle=no|yes         automatically demangle C++ names? [yes]
+    --num-callers=<number>    show <number> callers in stack traces [12]
+    --error-limit=no|yes      stop showing new errors if too many? [yes]
+    --error-exitcode=<number> exit code to return if errors found [0=disable]
+    --show-below-main=no|yes  continue stack traces below main() [no]
+    --suppressions=<filename> suppress errors described in <filename>
+    --gen-suppressions=no|yes|all    print suppressions for errors? [no]
+    --db-attach=no|yes        start debugger when errors detected? [no]
+    --db-command=<command>    command to start debugger [/usr/bin/gdb -nw %f %p]
+    --input-fd=<number>       file descriptor for input [0=stdin]
+    --max-stackframe=<number> assume stack switch for SP changes larger
+                              than <number> bytes [2000000]
+    --main-stacksize=<number> set size of main thread's stack (in bytes)
+                              [use current 'ulimit' value]
+
+  user options for Nulgrind:
+    (none)
+
+  debugging options for all Valgrind tools:
+    --sanity-level=<number>   level of sanity checking to do [1]
+    --trace-flags=<XXXXXXXX>   show generated code? (X = 0|1) [00000000]
+    --profile-flags=<XXXXXXXX> ditto, but for profiling (X = 0|1) [00000000]
+    --trace-notbelow=<number> only show BBs above <number> [999999999]
+    --trace-syscalls=no|yes   show all system calls? [no]
+    --trace-signals=no|yes    show signal handling details? [no]
+    --trace-symtab=no|yes     show symbol table details? [no]
+    --trace-symtab-patt=<patt> limit debuginfo tracing to obj name <patt>
+    --trace-cfi=no|yes        show call-frame-info details? [no]
+    --debug-dump=syms         mimic /usr/bin/readelf --syms
+    --debug-dump=line         mimic /usr/bin/readelf --debug-dump=line
+    --debug-dump=frames       mimic /usr/bin/readelf --debug-dump=frames
+    --trace-redir=no|yes      show redirection details? [no]
+    --trace-sched=no|yes      show thread scheduler details? [no]
+    --profile-heap=no|yes     profile Valgrind's own space use
+    --wait-for-gdb=yes|no     pause on startup to wait for gdb attach
+    --sym-offsets=yes|no      show syms in form 'name+offset' ? [no]
+    --command-line-only=no|yes  only use command line options [no]
+
+    --vex-iropt-verbosity             0 .. 9 [0]
+    --vex-iropt-level                 0 .. 2 [2]
+    --vex-iropt-precise-memory-exns   [no]
+    --vex-iropt-unroll-thresh         0 .. 400 [120]
+    --vex-guest-max-insns             1 .. 100 [50]
+    --vex-guest-chase-thresh          0 .. 99  [10]
+
+    --trace-flags and --profile-flags values (omit the middle space):
+       1000 0000   show conversion into IR
+       0100 0000   show after initial opt
+       0010 0000   show after instrumentation
+       0001 0000   show after second opt
+       0000 1000   show after tree building
+       0000 0100   show selecting insns
+       0000 0010   show after reg-alloc
+       0000 0001   show final assembly
+      (Nb: you need --trace-notbelow with --trace-flags for full details)
+
+  debugging options for Valgrind tools that report errors
+    --dump-error=<number>     show translation for basic block associated
+                              with <number>'th error context [0=show none]
+
+  debugging options for Nulgrind:
+    (none)
+
+  Extra options read from ~/.valgrindrc, $VALGRIND_OPTS, ./.valgrindrc
+
+  Valgrind is Copyright (C) 2000-2009 Julian Seward et al.
+  and licensed under the GNU General Public License, version 2.
+  Bug reports, feedback, admiration, abuse, etc, to: www.valgrind.org.
+
+  Tools are copyright and licensed by their authors.  See each
+  tool's start-up message for more information.
+

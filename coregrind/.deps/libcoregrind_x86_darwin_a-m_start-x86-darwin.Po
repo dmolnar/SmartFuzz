@@ -1,0 +1,9 @@
+libcoregrind_x86_darwin_a-m_start-x86-darwin.o \
+  libcoregrind_x86_darwin_a-m_start-x86-darwin.o: m_start-x86-darwin.S \
+  pub_core_basics_asm.h ../include/pub_tool_basics_asm.h ../config.h
+
+pub_core_basics_asm.h:
+
+../include/pub_tool_basics_asm.h:
+
+../config.h:

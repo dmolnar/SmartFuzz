@@ -1,0 +1,27 @@
+#include <unistd.h>
+#include <sys/fcntl.h>
+#include <stdio.h>
+#include <assert.h>
+
+int my_atoi(const char *str) {
+    int i = 0;
+    while (*str >= '0' && *str <= '9') {
+	i = 10*i + (*str - '0');
+	str++;
+    }
+    return i;
+}
+
+int main(int argc, char **argv) {
+    char buf[80];
+    int fd = open(argv[1], O_RDONLY);
+    int len = read(fd, buf, 79);
+    int i;
+    buf[len] = '\0';
+    i = my_atoi(buf);
+    if (i < 0) {
+	*((int *)i) = i;
+    }
+    printf("Read %u\n", i);
+    return 0;
+}

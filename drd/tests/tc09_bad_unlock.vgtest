@@ -1,0 +1,3 @@
+prereq: ./supported_libpthread
+vgopts: --check-stack-var=yes
+prog: ../../helgrind/tests/tc09_bad_unlock

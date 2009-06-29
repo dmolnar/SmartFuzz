@@ -1,0 +1,2 @@
+#!/bin/bash
+perl $CC_PREFIX/bin/dozzuf.pl $*

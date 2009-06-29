@@ -1,0 +1,164 @@
+
+List of tiny test cases for integer overflows to come up with:
+
+1)
+ exif_data_load_data_thumbnail (ExifData *data, const unsigned char *d,
+ 			       unsigned int ds, ExifLong offset, 
+ExifLong size)
+
+2)     cairo-png.c: read_png()
+
+The upstream fix can be found here:
+http://gitweb.freedesktop.org/?p=cairo;a=commitdiff;h=5c7d2d14d78e4dfb1ef6d2c40f0910f177e07360
+http://gitweb.freedesktop.org/?p=cairo;a=commitdiff;h=e49bcde27f88e21d5b8037a0089a226096f6514b
+
+3) FLAC
+https://bugzilla.redhat.com/attachment.cgi?id=227581
+
+4) XPDF
+
+An integer overflow error within the "DCTStream::reset()" method in
+xpdf/Stream.cc can be exploited to cause a heap-based buffer overflow
+via a specially crafted PDF file.
+
+5) RealPlayer:
+
+The problem stems from the parsing of a Lyrics3 v2.00 tag.  The size of
+the tag is calculated by reading 5 ASCII characters and calling
+pncrt.atoi.  A buffer is then allocated on the heap of size tag length +
+1.  Since atoi parses a signed integer, supplying -1, results in a zero
+length allocation into which data is copied.
+
+This can be exploited to overwrite a function pointer leading to the
+execution of arbitrary attacker-supplied code in the context of the user
+under which RealPlayer is running.
+
+6) Python:
+Slythers Bro discovered multiple integer overflows in the imageop
+module, one of them in the tovideo() method, in various locations in
+files imageop.c, rbgimgmodule.c, and also in other files.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4965
+
+7) PDFKit:
+
+PDFKit and ImageKits are vulnerable to an integer overflow and a stack
+overflow allowing for the user-assisted execution of arbitrary code.
+
+8) PHP5:
+
+Several vulnerabilities were found in PHP. Mattias Bengtsson and Philip
+Olausson reported integer overflows in the gdImageCreate() and
+gdImageCreateTrueColor() functions of the GD library which can cause
+heap-based buffer overflows (CVE-2007-3996). Gerhard Wagner discovered
+an integer overflow in the chunk_split() function that can lead to a
+heap-based buffer overflow (CVE-2007-2872). Its incomplete fix caused
+incorrect buffer size calculation due to precision loss, also resulting
+in a possible heap-based buffer overflow (CVE-2007-4661 and
+CVE-2007-4660). A buffer overflow in the sqlite_decode_binary() of the
+SQLite extension found by Stefan Esser that was addressed in PHP 5.2.1
+was not fixed correctly (CVE-2007-1887).
+
+9) ImageMagick:
+Remote exploitation of a sign extension vulnerability in ImageMagick, as
+included in various vendors' operating system distributions, allows
+attackers to execute arbitrary code.
+
+This vulnerability specifically exists in the ReadDIBImage() as shown
+below.
+
+ 558    image->columns=(unsigned long) dib_info.width
+ ...
+ 620    
+bytes_per_line=4*((image->columns*dib_info.bits_per_pixel+31)/32);
+ 621    length=bytes_per_line*image->rows;
+ 622    pixels=(unsigned char *) AcquireMagickMemory((size_t) MagickMax(
+ 623      
+bytes_per_line,image->columns+256)*image->rows*sizeof(*pixels));
+ ...
+ 629       count=ReadBlob(image,length,pixels);
+ ...
+ 638       status=DecodeImage(image,dib_info.compression ? MagickTrue :
+MagickFalse,pixels);
+
+At line 558, "dib_info.width" is a signed short, which is extended to an
+unsigned long and assigned to "image->columns". For example, a value of
+0x8000 will be extended to 0xffff8000. Later, it is used as a
+multiplier when calculating the allocation size. An integer overflow
+occurs, leading to a heap block of insufficient size being allocated.
+Consequently, a heap buffer overflow occurs.
+
+See also
+http://studio.imagemagick.org/pipermail/magick-announce/2007-September/000037.html
+
+
+10) poppler/xpdf:
+
+Integer overflow in the StreamPredictor::StreamPredictor function in 
+xpdf 3.02, as used in (1) poppler
+ before 0.5.91, (2) gpdf before 2.8.2, (3) kpdf, (4) kdegraphics, (5) 
+CUPS, (6) PDFedit, and other products,
+might allow remote attackers to execute arbitrary code via a crafted PDF 
+file that triggers a stack-based
+buffer overflow in the StreamPredictor::getNextLine function.
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-3387
+
+11) Feng RTSP server
+
+G] NULL pointer in Netembryo 0.0.4
+----------------------------------
+
+Although this vulnerability affects another software of the LScube
+project I have preferred to include it here since only when used with
+Feng this bug can be considered a security bug (Netembryo in fact is
+used also in libnemesi which is a client-side library).
+
+The usage of the ':' char after the backslash allows an attacker to
+crash the server on which is used the Url_init() function of the
+Netembryo library.
+In short when an urlname like /: is used the port_begin and path_begin
+pointers will point to the same location bypassing the check
+"port_begin > path_begin", then the function will try to allocate
+4294967294 bytes (-2 resulted by (size_t)(path_begin - port_begin - 1))
+for url->port which will fail and so the resulted NULL pointer will be
+used as destination in the subsequent strncpy.
+
+From utils/url.c:
+
+int Url_init(Url * url, char * urlname)
+{
+   ...
+   path_begin = strstr(hostname_begin, "/");
+   if (path_begin == NULL) {
+       path_len = 0;
+   }
+   else {
+       ++path_begin;
+   ...
+   port_begin = strstr(hostname_begin, ":");
+   if ((port_begin == NULL) || ((port_begin > path_begin) && (path_begin 
+!= NULL))) {
+   ...
+   if (port_len) {
+       url->port = (char*)malloc(port_len+1);
+       strncpy(url->port, port_begin, port_len);
+       url->port[port_len] = '\0';
+   }
+
+http://aluigi.org/poc/fengulo.zip
+
+12) PCRE prior to 7.3 int overflows
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2007-4766
+
+13)
+nteger overflow in gdImageCreateTrueColor function in the GD Graphics
+ Library (libgd) before 2.0.35 allows user-assisted remote attackers
+ to have unspecified remote attack vectors and impact. (CVE-2007-3472)
+
+ 14)
+ Sean Larsson from iDefense Labs discovered multiple integer overflows
+in various GIMP plugins (CVE-2006-4519). Stefan Cornelius from Secunia
+Research discovered an integer overflow in the
+seek_to_and_unpack_pixeldata() function when processing PSD files
+(CVE-2007-2949).
+
+

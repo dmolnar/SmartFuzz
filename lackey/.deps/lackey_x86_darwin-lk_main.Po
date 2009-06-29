@@ -1,0 +1,44 @@
+lackey_x86_darwin-lk_main.o lackey_x86_darwin-lk_main.o: lk_main.c \
+  ../include/pub_tool_basics.h ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../include/pub_tool_tooliface.h ../include/pub_tool_errormgr.h \
+  ../include/pub_tool_execontext.h ../VEX/pub/libvex.h \
+  ../VEX/pub/libvex_basictypes.h ../VEX/pub/libvex_ir.h \
+  ../VEX/pub/libvex_basictypes.h ../include/pub_tool_libcassert.h \
+  ../include/pub_tool_libcprint.h ../include/pub_tool_debuginfo.h \
+  ../include/pub_tool_libcbase.h ../include/pub_tool_options.h \
+  ../include/pub_tool_machine.h
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../include/pub_tool_tooliface.h:
+
+../include/pub_tool_errormgr.h:
+
+../include/pub_tool_execontext.h:
+
+../VEX/pub/libvex.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_ir.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../include/pub_tool_libcassert.h:
+
+../include/pub_tool_libcprint.h:
+
+../include/pub_tool_debuginfo.h:
+
+../include/pub_tool_libcbase.h:
+
+../include/pub_tool_options.h:
+
+../include/pub_tool_machine.h:

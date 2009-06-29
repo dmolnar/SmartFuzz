@@ -1,0 +1,13 @@
+#!/bin/sh
+gcc -O0 -g simpletest-malloc.c -o simpletest-malloc
+$VALGRIND --tool=catchconv -q --log-file-exactly=out-malloc ./simpletest-malloc 5
+$VALGRIND --tool=catchconv --trace-notbelow=0 --trace-flags=01000000 --log-file-exactly=verbose-latest-out-malloc ./simpletest-malloc 5 
+sed -e s/XXX/%/\g out-malloc > out-malloc-1
+echo "ASSERT(TRUE);" >> out-malloc-1
+$STP out-malloc-1
+grep XXX out-malloc-1 > unsup
+grep Unhandled unsup | uniq  > unhand
+grep Unsupported unsup | uniq > unsup-uniq
+cp out-malloc-1 out-malloc-1-query.stp
+echo "ASSERT(TRUE);" >> out-malloc-1-query.stp
+echo `grep QUERY out-malloc-1 | cut -d" " -f2 | head -n1` >> out-malloc-1-query.stp

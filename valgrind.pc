@@ -1,0 +1,16 @@
+prefix=/Users/dmolnar/vg-bin
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/valgrind
+arch=x86
+os=darwin
+platform=x86-darwin
+valt_load_address=0x0
+
+Name: Valgrind
+Description: A dynamic binary instrumentation framework
+Version: 3.5.0.SVN
+Requires:
+Libs: -L${libdir}/valgrind/x86-darwin -lcoregrind -lvex -lgcc
+Cflags: -I${includedir}
+

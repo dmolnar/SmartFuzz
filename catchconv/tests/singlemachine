@@ -1,0 +1,3 @@
+#!/bin/bash
+
+perl $CC_PREFIX/bin/singlemachine.pl $1 

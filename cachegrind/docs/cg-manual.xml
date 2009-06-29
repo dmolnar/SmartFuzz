@@ -1,0 +1,1349 @@
+<?xml version="1.0"?> <!-- -*- sgml -*- -->
+<!DOCTYPE chapter PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN"
+  "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
+[ <!ENTITY % vg-entities SYSTEM "../../docs/xml/vg-entities.xml"> %vg-entities; ]>
+
+
+<chapter id="cg-manual" xreflabel="Cachegrind: a cache-miss profiler">
+<title>Cachegrind: a cache and branch profiler</title>
+
+<sect1 id="cg-manual.cache" xreflabel="Cache profiling">
+<title>Cache and branch profiling</title>
+
+<para>To use this tool, you must specify
+<computeroutput>--tool=cachegrind</computeroutput> on the
+Valgrind command line.</para>
+
+<para>Cachegrind is a tool for finding places where programs
+interact badly with typical modern superscalar processors
+and run slowly as a result.
+In particular, it will do a cache simulation of your program,
+and optionally a branch-predictor simulation, and can
+then annotate your source line-by-line with the number of cache
+misses and branch mispredictions.  The following statistics are 
+collected:</para>
+<itemizedlist>
+  <listitem>
+    <para>L1 instruction cache reads and misses;</para>
+  </listitem>
+  <listitem>
+    <para>L1 data cache reads and read misses, writes and write
+    misses;</para>
+  </listitem>
+  <listitem>
+    <para>L2 unified cache reads and read misses, writes and
+    writes misses.</para>
+  </listitem>
+  <listitem>
+    <para>Conditional branches and mispredicted conditional branches.</para>
+  </listitem>
+  <listitem>
+    <para>Indirect branches and mispredicted indirect branches.  An
+    indirect branch is a jump or call to a destination only known at
+    run time.</para>
+  </listitem>
+</itemizedlist>
+
+<para>On a modern machine, an L1 miss will typically cost
+around 10 cycles, an L2 miss can cost as much as 200
+cycles, and a mispredicted branch costs in the region of 10
+to 30 cycles.  Detailed cache and branch profiling can be very useful
+for improving the performance of your program.</para>
+
+<para>Also, since one instruction cache read is performed per
+instruction executed, you can find out how many instructions are
+executed per line, which can be useful for traditional profiling
+and test coverage.</para>
+
+<para>Branch profiling is not enabled by default.  To use it, you must
+additionally specify <computeroutput>--branch-sim=yes</computeroutput>
+on the command line.</para>
+
+
+<sect2 id="cg-manual.overview" xreflabel="Overview">
+<title>Overview</title>
+
+<para>First off, as for normal Valgrind use, you probably want to
+compile with debugging info (the
+<computeroutput>-g</computeroutput> flag).  But by contrast with
+normal Valgrind use, you probably <command>do</command> want to turn
+optimisation on, since you should profile your program as it will
+be normally run.</para>
+
+<para>The two steps are:</para>
+<orderedlist>
+  <listitem>
+    <para>Run your program with <computeroutput>valgrind
+    --tool=cachegrind</computeroutput> in front of the normal
+    command line invocation.  When the program finishes,
+    Cachegrind will print summary cache statistics. It also
+    collects line-by-line information in a file
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>, where
+    <computeroutput>&lt;pid&gt;</computeroutput> is the program's process
+    ID.</para>
+
+    <para>Branch prediction statistics are not collected by default.
+    To do so, add the flag
+    <computeroutput>--branch-sim=yes</computeroutput>.
+    </para>
+
+    <para>This step should be done every time you want to collect
+    information about a new program, a changed program, or about
+    the same program with different input.</para>
+  </listitem>
+
+  <listitem>
+    <para>Generate a function-by-function summary, and possibly
+    annotate source files, using the supplied
+    cg_annotate program. Source
+    files to annotate can be specified manually, or manually on
+    the command line, or "interesting" source files can be
+    annotated automatically with the
+    <computeroutput>--auto=yes</computeroutput> option.  You can
+    annotate C/C++ files or assembly language files equally
+    easily.</para>
+
+    <para>This step can be performed as many times as you like
+    for each Step 2.  You may want to do multiple annotations
+    showing different information each time.</para>
+  </listitem>
+
+</orderedlist>
+
+<para>As an optional intermediate step, you can use the supplied
+cg_merge program to sum together the
+outputs of multiple Cachegrind runs, into a single file which you then
+use as the input for cg_annotate.</para>
+
+<para>These steps are described in detail in the following
+sections.</para>
+
+</sect2>
+
+
+<sect2 id="cache-sim" xreflabel="Cache simulation specifics">
+<title>Cache simulation specifics</title>
+
+<para>Cachegrind simulates a machine with independent
+first level instruction and data caches (I1 and D1), backed by a
+unified second level cache (L2).  This configuration is used by almost
+all modern machines.  Some old Cyrix CPUs had a unified I and D L1
+cache, but they are ancient history now.</para>
+
+<para>Specific characteristics of the simulation are as
+follows:</para>
+
+<itemizedlist>
+
+  <listitem>
+    <para>Write-allocate: when a write miss occurs, the block
+    written to is brought into the D1 cache.  Most modern caches
+    have this property.</para>
+  </listitem>
+
+  <listitem>
+    <para>Bit-selection hash function: the set of line(s) in the cache
+    to which a memory block maps is chosen by the middle bits
+    M--(M+N-1) of the byte address, where:</para>
+    <itemizedlist>
+      <listitem>
+        <para>line size = 2^M bytes</para>
+      </listitem>
+      <listitem>
+        <para>(cache size / line size / associativity) = 2^N bytes</para>
+      </listitem>
+    </itemizedlist> 
+  </listitem>
+
+  <listitem>
+    <para>Inclusive L2 cache: the L2 cache typically replicates all
+    the entries of the L1 caches, because fetching into L1 involves
+    fetching into L2 first (this does not guarantee strict inclusiveness,
+    as lines evicted from L2 still could reside in L1).  This is
+    standard on Pentium chips, but AMD Opterons, Athlons and Durons
+    use an exclusive L2 cache that only holds
+    blocks evicted from L1.  Ditto most modern VIA CPUs.</para>
+  </listitem>
+
+</itemizedlist>
+
+<para>The cache configuration simulated (cache size,
+associativity and line size) is determined automagically using
+the CPUID instruction.  If you have an old machine that (a)
+doesn't support the CPUID instruction, or (b) supports it in an
+early incarnation that doesn't give any cache information, then
+Cachegrind will fall back to using a default configuration (that
+of a model 3/4 Athlon).  Cachegrind will tell you if this
+happens.  You can manually specify one, two or all three levels
+(I1/D1/L2) of the cache from the command line using the
+<computeroutput>--I1</computeroutput>,
+<computeroutput>--D1</computeroutput> and
+<computeroutput>--L2</computeroutput> options.
+For cache parameters to be valid for simulation, the number
+of sets (with associativity being the number of cache lines in
+each set) has to be a power of two.</para>
+
+<para>On PowerPC platforms
+Cachegrind cannot automatically 
+determine the cache configuration, so you will 
+need to specify it with the
+<computeroutput>--I1</computeroutput>,
+<computeroutput>--D1</computeroutput> and
+<computeroutput>--L2</computeroutput> options.</para>
+
+
+<para>Other noteworthy behaviour:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>References that straddle two cache lines are treated as
+    follows:</para>
+    <itemizedlist>
+      <listitem>
+        <para>If both blocks hit --&gt; counted as one hit</para>
+      </listitem>
+      <listitem>
+        <para>If one block hits, the other misses --&gt; counted
+        as one miss.</para>
+      </listitem>
+      <listitem>
+        <para>If both blocks miss --&gt; counted as one miss (not
+        two)</para>
+      </listitem>
+    </itemizedlist>
+  </listitem>
+
+  <listitem>
+    <para>Instructions that modify a memory location
+    (eg. <computeroutput>inc</computeroutput> and
+    <computeroutput>dec</computeroutput>) are counted as doing
+    just a read, ie. a single data reference.  This may seem
+    strange, but since the write can never cause a miss (the read
+    guarantees the block is in the cache) it's not very
+    interesting.</para>
+
+    <para>Thus it measures not the number of times the data cache
+    is accessed, but the number of times a data cache miss could
+    occur.</para>
+  </listitem>
+
+</itemizedlist>
+
+<para>If you are interested in simulating a cache with different
+properties, it is not particularly hard to write your own cache
+simulator, or to modify the existing ones in
+<computeroutput>cg_sim.c</computeroutput>. We'd be
+interested to hear from anyone who does.</para>
+
+</sect2>
+
+
+<sect2 id="branch-sim" xreflabel="Branch simulation specifics">
+<title>Branch simulation specifics</title>
+
+<para>Cachegrind simulates branch predictors intended to be
+typical of mainstream desktop/server processors of around 2004.</para>
+
+<para>Conditional branches are predicted using an array of 16384 2-bit
+saturating counters.  The array index used for a branch instruction is
+computed partly from the low-order bits of the branch instruction's
+address and partly using the taken/not-taken behaviour of the last few
+conditional branches.  As a result the predictions for any specific
+branch depend both on its own history and the behaviour of previous
+branches.  This is a standard technique for improving prediction
+accuracy.</para>
+
+<para>For indirect branches (that is, jumps to unknown destinations)
+Cachegrind uses a simple branch target address predictor.  Targets are
+predicted using an array of 512 entries indexed by the low order 9
+bits of the branch instruction's address.  Each branch is predicted to
+jump to the same address it did last time.  Any other behaviour causes
+a mispredict.</para>
+
+<para>More recent processors have better branch predictors, in
+particular better indirect branch predictors.  Cachegrind's predictor
+design is deliberately conservative so as to be representative of the
+large installed base of processors which pre-date widespread
+deployment of more sophisticated indirect branch predictors.  In
+particular, late model Pentium 4s (Prescott), Pentium M, Core and Core
+2 have more sophisticated indirect branch predictors than modelled by
+Cachegrind.  </para>
+
+<para>Cachegrind does not simulate a return stack predictor.  It
+assumes that processors perfectly predict function return addresses,
+an assumption which is probably close to being true.</para>
+
+<para>See Hennessy and Patterson's classic text "Computer
+Architecture: A Quantitative Approach", 4th edition (2007), Section
+2.3 (pages 80-89) for background on modern branch predictors.</para>
+
+</sect2>
+
+
+</sect1>
+
+
+
+<sect1 id="cg-manual.profile" xreflabel="Profiling programs">
+<title>Profiling programs</title>
+
+<para>To gather cache profiling information about the program
+<computeroutput>ls -l</computeroutput>, invoke Cachegrind like
+this:</para>
+
+<programlisting><![CDATA[
+valgrind --tool=cachegrind ls -l]]></programlisting>
+
+<para>The program will execute (slowly).  Upon completion,
+summary statistics that look like this will be printed:</para>
+
+<programlisting><![CDATA[
+==31751== I   refs:      27,742,716
+==31751== I1  misses:           276
+==31751== L2  misses:           275
+==31751== I1  miss rate:        0.0%
+==31751== L2i miss rate:        0.0%
+==31751== 
+==31751== D   refs:      15,430,290  (10,955,517 rd + 4,474,773 wr)
+==31751== D1  misses:        41,185  (    21,905 rd +    19,280 wr)
+==31751== L2  misses:        23,085  (     3,987 rd +    19,098 wr)
+==31751== D1  miss rate:        0.2% (       0.1%   +       0.4%)
+==31751== L2d miss rate:        0.1% (       0.0%   +       0.4%)
+==31751== 
+==31751== L2 misses:         23,360  (     4,262 rd +    19,098 wr)
+==31751== L2 miss rate:         0.0% (       0.0%   +       0.4%)]]></programlisting>
+
+<para>Cache accesses for instruction fetches are summarised
+first, giving the number of fetches made (this is the number of
+instructions executed, which can be useful to know in its own
+right), the number of I1 misses, and the number of L2 instruction
+(<computeroutput>L2i</computeroutput>) misses.</para>
+
+<para>Cache accesses for data follow. The information is similar
+to that of the instruction fetches, except that the values are
+also shown split between reads and writes (note each row's
+<computeroutput>rd</computeroutput> and
+<computeroutput>wr</computeroutput> values add up to the row's
+total).</para>
+
+<para>Combined instruction and data figures for the L2 cache
+follow that.</para>
+
+
+
+<sect2 id="cg-manual.outputfile" xreflabel="Output file">
+<title>Output file</title>
+
+<para>As well as printing summary information, Cachegrind also
+writes line-by-line cache profiling information to a user-specified
+file.  By default this file is named
+<computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>.  This file
+is human-readable, but is intended to be interpreted by the accompanying
+program cg_annotate, described in the next section.</para>
+
+<para>Things to note about the
+<computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>
+file:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>It is written every time Cachegrind is run, and will
+    overwrite any existing
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>
+    in the current directory (but that won't happen very often
+    because it takes some time for process ids to be
+    recycled).</para>
+  </listitem>
+  <listitem>
+    <para>To use an output file name other than the default
+    <computeroutput>cachegrind.out</computeroutput>,
+    use the <computeroutput>--cachegrind-out-file</computeroutput>
+    switch.</para>
+  </listitem>
+  <listitem>
+    <para>It can be big: <computeroutput>ls -l</computeroutput>
+    generates a file of about 350KB.  Browsing a few files and
+    web pages with a Konqueror built with full debugging
+    information generates a file of around 15 MB.</para>
+  </listitem>
+</itemizedlist>
+
+<para>The default <computeroutput>.&lt;pid&gt;</computeroutput> suffix
+on the output file name serves two purposes.  Firstly, it means you 
+don't have to rename old log files that you don't want to overwrite.  
+Secondly, and more importantly, it allows correct profiling with the
+<computeroutput>--trace-children=yes</computeroutput> option of
+programs that spawn child processes.</para>
+
+</sect2>
+
+
+
+<sect2 id="cg-manual.cgopts" xreflabel="Cachegrind options">
+<title>Cachegrind options</title>
+
+<!-- start of xi:include in the manpage -->
+<para id="cg.opts.para">Using command line options, you can 
+manually specify the I1/D1/L2 cache
+configuration to simulate.  For each cache, you can specify the
+size, associativity and line size.  The size and line size
+are measured in bytes.  The three items
+must be comma-separated, but with no spaces, eg:
+<literallayout>    valgrind --tool=cachegrind --I1=65535,2,64</literallayout>
+
+You can specify one, two or three of the I1/D1/L2 caches.  Any level not
+manually specified will be simulated using the configuration found in
+the normal way (via the CPUID instruction for automagic cache
+configuration, or failing that, via defaults).</para>
+
+<para>Cache-simulation specific options are:</para>
+
+<variablelist id="cg.opts.list">
+
+  <varlistentry id="opt.I1" xreflabel="--I1">
+    <term>
+      <option><![CDATA[--I1=<size>,<associativity>,<line size> ]]></option>
+    </term>
+    <listitem>
+      <para>Specify the size, associativity and line size of the level 1
+      instruction cache.  </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry id="opt.D1" xreflabel="--D1">
+    <term>
+      <option><![CDATA[--D1=<size>,<associativity>,<line size> ]]></option>
+    </term>
+    <listitem>
+      <para>Specify the size, associativity and line size of the level 1
+      data cache.</para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry id="opt.L2" xreflabel="--L2">
+    <term>
+      <option><![CDATA[--L2=<size>,<associativity>,<line size> ]]></option>
+    </term>
+    <listitem>
+      <para>Specify the size, associativity and line size of the level 2
+      cache.</para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry id="opt.cachegrind-out-file" xreflabel="--cachegrind-out-file">
+    <term>
+      <option><![CDATA[--cachegrind-out-file=<file> ]]></option>
+    </term>
+    <listitem>
+      <para>Write the profile data to 
+            <computeroutput>file</computeroutput> rather than to the default
+            output file,
+            <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>.  The
+            <option>%p</option> and <option>%q</option> format specifiers
+            can be used to embed the process ID and/or the contents of an
+            environment variable in the name, as is the case for the core
+            option <option>--log-file</option>.  See <link
+            linkend="manual-core.basicopts">here</link> for details.
+      </para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry id="opt.cache-sim" xreflabel="--cache-sim">
+    <term>
+      <option><![CDATA[--cache-sim=no|yes [yes] ]]></option>
+    </term>
+    <listitem>
+      <para>Enables or disables collection of cache access and miss
+            counts.</para>
+    </listitem>
+  </varlistentry>
+
+  <varlistentry id="opt.branch-sim" xreflabel="--branch-sim">
+    <term>
+      <option><![CDATA[--branch-sim=no|yes [no] ]]></option>
+    </term>
+    <listitem>
+      <para>Enables or disables collection of branch instruction and
+            misprediction counts.  By default this is disabled as it
+            slows Cachegrind down by approximately 25%.  Note that you
+            cannot specify <computeroutput>--cache-sim=no</computeroutput>
+            and <computeroutput>--branch-sim=no</computeroutput>
+            together, as that would leave Cachegrind with no
+            information to collect.</para>
+    </listitem>
+  </varlistentry>
+
+</variablelist>
+<!-- end of xi:include in the manpage -->
+
+</sect2>
+
+
+  
+<sect2 id="cg-manual.annotate" xreflabel="Annotating C/C++ programs">
+<title>Annotating C/C++ programs</title>
+
+<para>Before using cg_annotate,
+it is worth widening your window to be at least 120-characters
+wide if possible, as the output lines can be quite long.</para>
+
+<para>To get a function-by-function summary, run <computeroutput>cg_annotate
+&lt;filename&gt;</computeroutput> on a Cachegrind output file.</para>
+
+<para>The output looks like this:</para>
+
+<programlisting><![CDATA[
+--------------------------------------------------------------------------------
+I1 cache:              65536 B, 64 B, 2-way associative
+D1 cache:              65536 B, 64 B, 2-way associative
+L2 cache:              262144 B, 64 B, 8-way associative
+Command:               concord vg_to_ucode.c
+Events recorded:       Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Events shown:          Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Event sort order:      Ir I1mr I2mr Dr D1mr D2mr Dw D1mw D2mw
+Threshold:             99%
+Chosen for annotation:
+Auto-annotation:       on
+
+--------------------------------------------------------------------------------
+Ir         I1mr I2mr Dr         D1mr   D2mr  Dw        D1mw   D2mw
+--------------------------------------------------------------------------------
+27,742,716  276  275 10,955,517 21,905 3,987 4,474,773 19,280 19,098  PROGRAM TOTALS
+
+--------------------------------------------------------------------------------
+Ir        I1mr I2mr Dr        D1mr  D2mr  Dw        D1mw   D2mw    file:function
+--------------------------------------------------------------------------------
+8,821,482    5    5 2,242,702 1,621    73 1,794,230      0      0  getc.c:_IO_getc
+5,222,023    4    4 2,276,334    16    12   875,959      1      1  concord.c:get_word
+2,649,248    2    2 1,344,810 7,326 1,385         .      .      .  vg_main.c:strcmp
+2,521,927    2    2   591,215     0     0   179,398      0      0  concord.c:hash
+2,242,740    2    2 1,046,612   568    22   448,548      0      0  ctype.c:tolower
+1,496,937    4    4   630,874 9,000 1,400   279,388      0      0  concord.c:insert
+  897,991   51   51   897,831    95    30        62      1      1  ???:???
+  598,068    1    1   299,034     0     0   149,517      0      0  ../sysdeps/generic/lockfile.c:__flockfile
+  598,068    0    0   299,034     0     0   149,517      0      0  ../sysdeps/generic/lockfile.c:__funlockfile
+  598,024    4    4   213,580    35    16   149,506      0      0  vg_clientmalloc.c:malloc
+  446,587    1    1   215,973 2,167   430   129,948 14,057 13,957  concord.c:add_existing
+  341,760    2    2   128,160     0     0   128,160      0      0  vg_clientmalloc.c:vg_trap_here_WRAPPER
+  320,782    4    4   150,711   276     0    56,027     53     53  concord.c:init_hash_table
+  298,998    1    1   106,785     0     0    64,071      1      1  concord.c:create
+  149,518    0    0   149,516     0     0         1      0      0  ???:tolower@@GLIBC_2.0
+  149,518    0    0   149,516     0     0         1      0      0  ???:fgetc@@GLIBC_2.0
+   95,983    4    4    38,031     0     0    34,409  3,152  3,150  concord.c:new_word_node
+   85,440    0    0    42,720     0     0    21,360      0      0  vg_clientmalloc.c:vg_bogus_epilogue]]></programlisting>
+
+
+<para>First up is a summary of the annotation options:</para>
+                    
+<itemizedlist>
+
+  <listitem>
+    <para>I1 cache, D1 cache, L2 cache: cache configuration.  So
+    you know the configuration with which these results were
+    obtained.</para>
+  </listitem>
+
+  <listitem>
+    <para>Command: the command line invocation of the program
+      under examination.</para>
+  </listitem>
+
+  <listitem>
+   <para>Events recorded: event abbreviations are:</para>
+   <itemizedlist>
+     <listitem>
+       <para><computeroutput>Ir</computeroutput>: I cache reads
+       (ie. instructions executed)</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>I1mr</computeroutput>: I1 cache read
+       misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>I2mr</computeroutput>: L2 cache
+       instruction read misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Dr</computeroutput>: D cache reads
+       (ie. memory reads)</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>D1mr</computeroutput>: D1 cache read
+       misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>D2mr</computeroutput>: L2 cache data
+       read misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Dw</computeroutput>: D cache writes
+       (ie. memory writes)</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>D1mw</computeroutput>: D1 cache write
+       misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>D2mw</computeroutput>: L2 cache data
+       write misses</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Bc</computeroutput>: Conditional branches
+       executed</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Bcm</computeroutput>: Conditional branches
+       mispredicted</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Bi</computeroutput>: Indirect branches
+       executed</para>
+     </listitem>
+     <listitem>
+       <para><computeroutput>Bim</computeroutput>: Conditional branches
+       mispredicted</para>
+     </listitem>
+   </itemizedlist>
+
+   <para>Note that D1 total accesses is given by
+   <computeroutput>D1mr</computeroutput> +
+   <computeroutput>D1mw</computeroutput>, and that L2 total
+   accesses is given by <computeroutput>I2mr</computeroutput> +
+   <computeroutput>D2mr</computeroutput> +
+   <computeroutput>D2mw</computeroutput>.</para>
+ </listitem>
+
+ <listitem>
+   <para>Events shown: the events shown, which is a subset of the events
+   gathered.  This can be adjusted with the
+   <computeroutput>--show</computeroutput> option.</para>
+  </listitem>
+
+  <listitem>
+    <para>Event sort order: the sort order in which functions are
+    shown.  For example, in this case the functions are sorted
+    from highest <computeroutput>Ir</computeroutput> counts to
+    lowest.  If two functions have identical
+    <computeroutput>Ir</computeroutput> counts, they will then be
+    sorted by <computeroutput>I1mr</computeroutput> counts, and
+    so on.  This order can be adjusted with the
+    <computeroutput>--sort</computeroutput> option.</para>
+
+    <para>Note that this dictates the order the functions appear.
+    It is <command>not</command> the order in which the columns
+    appear; that is dictated by the "events shown" line (and can
+    be changed with the <computeroutput>--show</computeroutput>
+    option).</para>
+  </listitem>
+
+  <listitem>
+    <para>Threshold: cg_annotate
+    by default omits functions that cause very low counts
+    to avoid drowning you in information.  In this case,
+    cg_annotate shows summaries the functions that account for
+    99% of the <computeroutput>Ir</computeroutput> counts;
+    <computeroutput>Ir</computeroutput> is chosen as the
+    threshold event since it is the primary sort event.  The
+    threshold can be adjusted with the
+    <computeroutput>--threshold</computeroutput>
+    option.</para>
+  </listitem>
+
+  <listitem>
+    <para>Chosen for annotation: names of files specified
+    manually for annotation; in this case none.</para>
+  </listitem>
+
+  <listitem>
+    <para>Auto-annotation: whether auto-annotation was requested
+    via the <computeroutput>--auto=yes</computeroutput>
+    option. In this case no.</para>
+  </listitem>
+
+</itemizedlist>
+
+<para>Then follows summary statistics for the whole
+program. These are similar to the summary provided when running
+<computeroutput>valgrind --tool=cachegrind</computeroutput>.</para>
+  
+<para>Then follows function-by-function statistics. Each function
+is identified by a
+<computeroutput>file_name:function_name</computeroutput> pair. If
+a column contains only a dot it means the function never performs
+that event (eg. the third row shows that
+<computeroutput>strcmp()</computeroutput> contains no
+instructions that write to memory). The name
+<computeroutput>???</computeroutput> is used if the the file name
+and/or function name could not be determined from debugging
+information. If most of the entries have the form
+<computeroutput>???:???</computeroutput> the program probably
+wasn't compiled with <computeroutput>-g</computeroutput>.  If any
+code was invalidated (either due to self-modifying code or
+unloading of shared objects) its counts are aggregated into a
+single cost centre written as
+<computeroutput>(discarded):(discarded)</computeroutput>.</para>
+
+<para>It is worth noting that functions will come both from
+the profiled program (eg. <filename>concord.c</filename>)
+and from libraries (eg. <filename>getc.c</filename>)</para>
+
+<para>There are two ways to annotate source files -- by choosing
+them manually, or with the
+<computeroutput>--auto=yes</computeroutput> option. To do it
+manually, just specify the filenames as additional arguments to
+cg_annotate. For example, the
+output from running <filename>cg_annotate &lt;filename&gt;
+concord.c</filename> for our example produces the same output as above
+followed by an annotated version of <filename>concord.c</filename>, a
+section of which looks like:</para>
+
+<programlisting><![CDATA[
+--------------------------------------------------------------------------------
+-- User-annotated source: concord.c
+--------------------------------------------------------------------------------
+Ir        I1mr I2mr Dr      D1mr  D2mr  Dw      D1mw   D2mw
+
+[snip]
+
+        .    .    .       .     .     .       .      .      .  void init_hash_table(char *file_name, Word_Node *table[])
+        3    1    1       .     .     .       1      0      0  {
+        .    .    .       .     .     .       .      .      .      FILE *file_ptr;
+        .    .    .       .     .     .       .      .      .      Word_Info *data;
+        1    0    0       .     .     .       1      1      1      int line = 1, i;
+        .    .    .       .     .     .       .      .      .
+        5    0    0       .     .     .       3      0      0      data = (Word_Info *) create(sizeof(Word_Info));
+        .    .    .       .     .     .       .      .      .
+    4,991    0    0   1,995     0     0     998      0      0      for (i = 0; i < TABLE_SIZE; i++)
+    3,988    1    1   1,994     0     0     997     53     52          table[i] = NULL;
+        .    .    .       .     .     .       .      .      .
+        .    .    .       .     .     .       .      .      .      /* Open file, check it. */
+        6    0    0       1     0     0       4      0      0      file_ptr = fopen(file_name, "r");
+        2    0    0       1     0     0       .      .      .      if (!(file_ptr)) {
+        .    .    .       .     .     .       .      .      .          fprintf(stderr, "Couldn't open '%s'.\n", file_name);
+        1    1    1       .     .     .       .      .      .          exit(EXIT_FAILURE);
+        .    .    .       .     .     .       .      .      .      }
+        .    .    .       .     .     .       .      .      .
+  165,062    1    1  73,360     0     0  91,700      0      0      while ((line = get_word(data, line, file_ptr)) != EOF)
+  146,712    0    0  73,356     0     0  73,356      0      0          insert(data->;word, data->line, table);
+        .    .    .       .     .     .       .      .      .
+        4    0    0       1     0     0       2      0      0      free(data);
+        4    0    0       1     0     0       2      0      0      fclose(file_ptr);
+        3    0    0       2     0     0       .      .      .  }]]></programlisting>
+
+<para>(Although column widths are automatically minimised, a wide
+terminal is clearly useful.)</para>
+  
+<para>Each source file is clearly marked
+(<computeroutput>User-annotated source</computeroutput>) as
+having been chosen manually for annotation.  If the file was
+found in one of the directories specified with the
+<computeroutput>-I / --include</computeroutput> option, the directory
+and file are both given.</para>
+
+<para>Each line is annotated with its event counts.  Events not
+applicable for a line are represented by a dot.  This is useful
+for distinguishing between an event which cannot happen, and one
+which can but did not.</para>
+
+<para>Sometimes only a small section of a source file is
+executed.  To minimise uninteresting output, Cachegrind only shows
+annotated lines and lines within a small distance of annotated
+lines.  Gaps are marked with the line numbers so you know which
+part of a file the shown code comes from, eg:</para>
+
+<programlisting><![CDATA[
+(figures and code for line 704)
+-- line 704 ----------------------------------------
+-- line 878 ----------------------------------------
+(figures and code for line 878)]]></programlisting>
+
+<para>The amount of context to show around annotated lines is
+controlled by the <computeroutput>--context</computeroutput>
+option.</para>
+
+<para>To get automatic annotation, run
+<computeroutput>cg_annotate &lt;filename&gt; --auto=yes</computeroutput>.
+cg_annotate will automatically annotate every source file it can
+find that is mentioned in the function-by-function summary.
+Therefore, the files chosen for auto-annotation are affected by
+the <computeroutput>--sort</computeroutput> and
+<computeroutput>--threshold</computeroutput> options.  Each
+source file is clearly marked (<computeroutput>Auto-annotated
+source</computeroutput>) as being chosen automatically.  Any
+files that could not be found are mentioned at the end of the
+output, eg:</para>
+
+<programlisting><![CDATA[
+------------------------------------------------------------------
+The following files chosen for auto-annotation could not be found:
+------------------------------------------------------------------
+  getc.c
+  ctype.c
+  ../sysdeps/generic/lockfile.c]]></programlisting>
+
+<para>This is quite common for library files, since libraries are
+usually compiled with debugging information, but the source files
+are often not present on a system.  If a file is chosen for
+annotation <command>both</command> manually and automatically, it
+is marked as <computeroutput>User-annotated
+source</computeroutput>. Use the <computeroutput>-I /
+--include</computeroutput> option to tell Valgrind where to look
+for source files if the filenames found from the debugging
+information aren't specific enough.</para>
+
+<para>Beware that cg_annotate can take some time to digest large
+<computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput> files,
+e.g. 30 seconds or more.  Also beware that auto-annotation can
+produce a lot of output if your program is large!</para>
+
+</sect2>
+
+
+<sect2 id="cg-manual.assembler" xreflabel="Annotating assembler programs">
+<title>Annotating assembly code programs</title>
+
+<para>Valgrind can annotate assembly code programs too, or annotate
+the assembly code generated for your C program.  Sometimes this is
+useful for understanding what is really happening when an
+interesting line of C code is translated into multiple
+instructions.</para>
+
+<para>To do this, you just need to assemble your
+<computeroutput>.s</computeroutput> files with assembly-level debug
+information.  You can use <computeroutput>gcc
+-S</computeroutput> to compile C/C++ programs to assembly code, and then
+<computeroutput>gcc -g</computeroutput> on the assembly code files to
+achieve this.  You can then profile and annotate the assembly code source
+files in the same way as C/C++ source files.</para>
+
+</sect2>
+
+<sect2 id="ms-manual.forkingprograms" xreflabel="Forking Programs">
+<title>Forking Programs</title>
+<para>If your program forks, the child will inherit all the profiling data that
+has been gathered for the parent.</para>
+
+<para>If the output file format string (controlled by
+<option>--cachegrind-out-file</option>) does not contain <option>%p</option>,
+then the outputs from the parent and child will be intermingled in a single
+output file, which will almost certainly make it unreadable by
+cg_annotate.</para>
+</sect2>
+
+
+</sect1>
+
+
+<sect1 id="cg-manual.annopts" xreflabel="cg_annotate options">
+<title>cg_annotate options</title>
+
+<itemizedlist>
+
+  <listitem>
+    <para><computeroutput>-h, --help</computeroutput></para>
+    <para><computeroutput>-v, --version</computeroutput></para>
+    <para>Help and version, as usual.</para>
+  </listitem>
+
+  <listitem id="sort">
+    <para><computeroutput>--sort=A,B,C</computeroutput> [default:
+    order in
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>]</para>
+    <para>Specifies the events upon which the sorting of the
+    function-by-function entries will be based.  Useful if you
+    want to concentrate on eg. I cache misses
+    (<computeroutput>--sort=I1mr,I2mr</computeroutput>), or D
+    cache misses
+    (<computeroutput>--sort=D1mr,D2mr</computeroutput>), or L2
+    misses
+    (<computeroutput>--sort=D2mr,I2mr</computeroutput>).</para>
+  </listitem>
+
+  <listitem id="show">
+    <para><computeroutput>--show=A,B,C</computeroutput> [default:
+    all, using order in
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput>]</para>
+    <para>Specifies which events to show (and the column
+    order). Default is to use all present in the
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput> file (and
+    use the order in the file).</para>
+  </listitem>
+
+  <listitem id="threshold">
+    <para><computeroutput>--threshold=X</computeroutput>
+    [default: 99%]</para>
+    <para>Sets the threshold for the function-by-function
+    summary.  Functions are shown that account for more than X%
+    of the primary sort event.  If auto-annotating, also affects
+    which files are annotated.</para>
+      
+    <para>Note: thresholds can be set for more than one of the
+    events by appending any events for the
+    <computeroutput>--sort</computeroutput> option with a colon
+    and a number (no spaces, though).  E.g. if you want to see
+    the functions that cover 99% of L2 read misses and 99% of L2
+    write misses, use this option:</para>
+    <para><computeroutput>--sort=D2mr:99,D2mw:99</computeroutput></para>
+  </listitem>
+
+  <listitem id="auto">
+    <para><computeroutput>--auto=no</computeroutput> [default]</para>
+    <para><computeroutput>--auto=yes</computeroutput></para>
+    <para>When enabled, automatically annotates every file that
+    is mentioned in the function-by-function summary that can be
+    found.  Also gives a list of those that couldn't be found.</para>
+  </listitem>
+
+  <listitem id="context">
+    <para><computeroutput>--context=N</computeroutput> [default:
+    8]</para>
+    <para>Print N lines of context before and after each
+    annotated line.  Avoids printing large sections of source
+    files that were not executed.  Use a large number
+    (eg. 10,000) to show all source lines.</para>
+  </listitem>
+
+  <listitem id="include">
+    <para><computeroutput>-I&lt;dir&gt;,
+      --include=&lt;dir&gt;</computeroutput> [default: empty
+      string]</para>
+    <para>Adds a directory to the list in which to search for
+    files.  Multiple -I/--include options can be given to add
+    multiple directories.</para>
+  </listitem>
+
+</itemizedlist>
+  
+
+
+<sect2 id="cg-manual.annopts.warnings" xreflabel="Warnings">
+<title>Warnings</title>
+
+<para>There are a couple of situations in which
+cg_annotate issues warnings.</para>
+
+<itemizedlist>
+  <listitem>
+    <para>If a source file is more recent than the
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput> file.
+    This is because the information in
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput> is only
+    recorded with line numbers, so if the line numbers change at
+    all in the source (eg.  lines added, deleted, swapped), any
+    annotations will be incorrect.</para>
+  </listitem>
+  <listitem>
+    <para>If information is recorded about line numbers past the
+    end of a file.  This can be caused by the above problem,
+    ie. shortening the source file while using an old
+    <computeroutput>cachegrind.out.&lt;pid&gt;</computeroutput> file.  If
+    this happens, the figures for the bogus lines are printed
+    anyway (clearly marked as bogus) in case they are
+    important.</para>
+  </listitem>
+</itemizedlist>
+
+</sect2>
+
+
+
+<sect2 id="cg-manual.annopts.things-to-watch-out-for"
+       xreflabel="Things to watch out for">
+<title>Things to watch out for</title>
+
+<para>Some odd things that can occur during annotation:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>If annotating at the assembler level, you might see
+    something like this:</para>
+<programlisting><![CDATA[
+      1    0    0  .    .    .  .    .    .          leal -12(%ebp),%eax
+      1    0    0  .    .    .  1    0    0          movl %eax,84(%ebx)
+      2    0    0  0    0    0  1    0    0          movl $1,-20(%ebp)
+      .    .    .  .    .    .  .    .    .          .align 4,0x90
+      1    0    0  .    .    .  .    .    .          movl $.LnrB,%eax
+      1    0    0  .    .    .  1    0    0          movl %eax,-16(%ebp)]]></programlisting>
+
+    <para>How can the third instruction be executed twice when
+    the others are executed only once?  As it turns out, it
+    isn't.  Here's a dump of the executable, using
+    <computeroutput>objdump -d</computeroutput>:</para>
+<programlisting><![CDATA[
+      8048f25:       8d 45 f4                lea    0xfffffff4(%ebp),%eax
+      8048f28:       89 43 54                mov    %eax,0x54(%ebx)
+      8048f2b:       c7 45 ec 01 00 00 00    movl   $0x1,0xffffffec(%ebp)
+      8048f32:       89 f6                   mov    %esi,%esi
+      8048f34:       b8 08 8b 07 08          mov    $0x8078b08,%eax
+      8048f39:       89 45 f0                mov    %eax,0xfffffff0(%ebp)]]></programlisting>
+
+    <para>Notice the extra <computeroutput>mov
+    %esi,%esi</computeroutput> instruction.  Where did this come
+    from?  The GNU assembler inserted it to serve as the two
+    bytes of padding needed to align the <computeroutput>movl
+    $.LnrB,%eax</computeroutput> instruction on a four-byte
+    boundary, but pretended it didn't exist when adding debug
+    information.  Thus when Valgrind reads the debug info it
+    thinks that the <computeroutput>movl
+    $0x1,0xffffffec(%ebp)</computeroutput> instruction covers the
+    address range 0x8048f2b--0x804833 by itself, and attributes
+    the counts for the <computeroutput>mov
+    %esi,%esi</computeroutput> to it.</para>
+  </listitem>
+
+  <listitem>
+    <para>Inlined functions can cause strange results in the
+    function-by-function summary.  If a function
+    <computeroutput>inline_me()</computeroutput> is defined in
+    <filename>foo.h</filename> and inlined in the functions
+    <computeroutput>f1()</computeroutput>,
+    <computeroutput>f2()</computeroutput> and
+    <computeroutput>f3()</computeroutput> in
+    <filename>bar.c</filename>, there will not be a
+    <computeroutput>foo.h:inline_me()</computeroutput> function
+    entry.  Instead, there will be separate function entries for
+    each inlining site, ie.
+    <computeroutput>foo.h:f1()</computeroutput>,
+    <computeroutput>foo.h:f2()</computeroutput> and
+    <computeroutput>foo.h:f3()</computeroutput>.  To find the
+    total counts for
+    <computeroutput>foo.h:inline_me()</computeroutput>, add up
+    the counts from each entry.</para>
+
+    <para>The reason for this is that although the debug info
+    output by gcc indicates the switch from
+    <filename>bar.c</filename> to <filename>foo.h</filename>, it
+    doesn't indicate the name of the function in
+    <filename>foo.h</filename>, so Valgrind keeps using the old
+    one.</para>
+  </listitem>
+
+  <listitem>
+    <para>Sometimes, the same filename might be represented with
+    a relative name and with an absolute name in different parts
+    of the debug info, eg:
+    <filename>/home/user/proj/proj.h</filename> and
+    <filename>../proj.h</filename>.  In this case, if you use
+    auto-annotation, the file will be annotated twice with the
+    counts split between the two.</para>
+  </listitem>
+
+  <listitem>
+    <para>Files with more than 65,535 lines cause difficulties
+    for the Stabs-format debug info reader.  This is because the line
+    number in the <computeroutput>struct nlist</computeroutput>
+    defined in <filename>a.out.h</filename> under Linux is only a
+    16-bit value.  Valgrind can handle some files with more than
+    65,535 lines correctly by making some guesses to identify
+    line number overflows.  But some cases are beyond it, in
+    which case you'll get a warning message explaining that
+    annotations for the file might be incorrect.</para>
+    
+    <para>If you are using gcc 3.1 or later, this is most likely
+    irrelevant, since gcc switched to using the more modern DWARF2 
+    format by default at version 3.1.  DWARF2 does not have any such
+    limitations on line numbers.</para>
+  </listitem>
+
+  <listitem>
+    <para>If you compile some files with
+    <computeroutput>-g</computeroutput> and some without, some
+    events that take place in a file without debug info could be
+    attributed to the last line of a file with debug info
+    (whichever one gets placed before the non-debug-info file in
+    the executable).</para>
+  </listitem>
+
+</itemizedlist>
+
+<para>This list looks long, but these cases should be fairly
+rare.</para>
+
+</sect2>
+
+
+
+<sect2 id="cg-manual.annopts.accuracy" xreflabel="Accuracy">
+<title>Accuracy</title>
+
+<para>Valgrind's cache profiling has a number of
+shortcomings:</para>
+
+<itemizedlist>
+  <listitem>
+    <para>It doesn't account for kernel activity -- the effect of
+    system calls on the cache contents is ignored.</para>
+  </listitem>
+
+  <listitem>
+    <para>It doesn't account for other process activity.
+    This is probably desirable when considering a single
+    program.</para>
+  </listitem>
+
+  <listitem>
+    <para>It doesn't account for virtual-to-physical address
+    mappings.  Hence the simulation is not a true
+    representation of what's happening in the
+    cache.  Most caches are physically indexed, but Cachegrind
+    simulates caches using virtual addresses.</para>
+  </listitem>
+
+  <listitem>
+    <para>It doesn't account for cache misses not visible at the
+    instruction level, eg. those arising from TLB misses, or
+    speculative execution.</para>
+  </listitem>
+
+  <listitem>
+    <para>Valgrind will schedule
+    threads differently from how they would be when running natively.
+    This could warp the results for threaded programs.</para>
+  </listitem>
+
+  <listitem>
+    <para>The x86/amd64 instructions <computeroutput>bts</computeroutput>,
+    <computeroutput>btr</computeroutput> and
+    <computeroutput>btc</computeroutput> will incorrectly be
+    counted as doing a data read if both the arguments are
+    registers, eg:</para>
+<programlisting><![CDATA[
+    btsl %eax, %edx]]></programlisting>
+
+    <para>This should only happen rarely.</para>
+  </listitem>
+
+  <listitem>
+    <para>x86/amd64 FPU instructions with data sizes of 28 and 108 bytes
+    (e.g.  <computeroutput>fsave</computeroutput>) are treated as
+    though they only access 16 bytes.  These instructions seem to
+    be rare so hopefully this won't affect accuracy much.</para>
+  </listitem>
+
+</itemizedlist>
+
+<para>Another thing worth noting is that results are very sensitive.
+Changing the size of the the executable being profiled, or the sizes
+of any of the shared libraries it uses, or even the length of their
+file names, can perturb the results.  Variations will be small, but
+don't expect perfectly repeatable results if your program changes at
+all.</para>
+
+<para>More recent GNU/Linux distributions do address space
+randomisation, in which identical runs of the same program have their
+shared libraries loaded at different locations, as a security measure.
+This also perturbs the results.</para>
+
+<para>While these factors mean you shouldn't trust the results to
+be super-accurate, hopefully they should be close enough to be
+useful.</para>
+
+</sect2>
+
+</sect1>
+
+
+
+<sect1 id="cg-manual.cg_merge" xreflabel="cg_merge">
+<title>Merging profiles with cg_merge</title>
+
+<para>
+cg_merge is a simple program which
+reads multiple profile files, as created by cachegrind, merges them
+together, and writes the results into another file in the same format.
+You can then examine the merged results using
+<computeroutput>cg_annotate &lt;filename&gt;</computeroutput>, as
+described above.  The merging functionality might be useful if you
+want to aggregate costs over multiple runs of the same program, or
+from a single parallel run with multiple instances of the same
+program.</para>
+
+<para>
+cg_merge is invoked as follows:
+</para>
+
+<programlisting><![CDATA[
+cg_merge -o outputfile file1 file2 file3 ...]]></programlisting>
+
+<para>
+It reads and checks <computeroutput>file1</computeroutput>, then read
+and checks <computeroutput>file2</computeroutput> and merges it into
+the running totals, then the same with
+<computeroutput>file3</computeroutput>, etc.  The final results are
+written to <computeroutput>outputfile</computeroutput>, or to standard
+out if no output file is specified.</para>
+
+<para>
+Costs are summed on a per-function, per-line and per-instruction
+basis.  Because of this, the order in which the input files does not
+matter, although you should take care to only mention each file once,
+since any file mentioned twice will be added in twice.</para>
+
+<para>
+cg_merge does not attempt to check
+that the input files come from runs of the same executable.  It will
+happily merge together profile files from completely unrelated
+programs.  It does however check that the
+<computeroutput>Events:</computeroutput> lines of all the inputs are
+identical, so as to ensure that the addition of costs makes sense.
+For example, it would be nonsensical for it to add a number indicating
+D1 read references to a number from a different file indicating L2
+write misses.</para>
+
+<para>
+A number of other syntax and sanity checks are done whilst reading the
+inputs.  cg_merge will stop and
+attempt to print a helpful error message if any of the input files
+fail these checks.</para>
+
+</sect1>
+
+
+<sect1 id="cg-manual.acting-on"
+       xreflabel="Acting on Cachegrind's information">
+<title>Acting on Cachegrind's information</title>
+<para>
+So, you've managed to profile your program with Cachegrind.  Now what?
+What's the best way to actually act on the information it provides to speed
+up your program?  Here are some rules of thumb that we have found to be
+useful.</para>
+
+<para>
+First of all, the global hit/miss rate numbers are not that useful.  If you
+have multiple programs or multiple runs of a program, comparing the numbers
+might identify if any are outliers and worthy of closer investigation.
+Otherwise, they're not enough to act on.</para>
+
+<para>
+The line-by-line source code annotations are much more useful.  In our
+experience, the best place to start is by looking at the
+<computeroutput>Ir</computeroutput> numbers.  They simply measure how many
+instructions were executed for each line, and don't include any cache
+information, but they can still be very useful for identifying
+bottlenecks.</para>
+
+<para>
+After that, we have found that L2 misses are typically a much bigger source
+of slow-downs than L1 misses.  So it's worth looking for any snippets of
+code that cause a high proportion of the L2 misses.  If you find any, it's
+still not always easy to work out how to improve things.  You need to have a
+reasonable understanding of how caches work, the principles of locality, and
+your program's data access patterns.  Improving things may require
+redesigning a data structure, for example.</para>
+
+<para>
+In short, Cachegrind can tell you where some of the bottlenecks in your code
+are, but it can't tell you how to fix them.  You have to work that out for
+yourself.  But at least you have the information!
+</para>
+
+</sect1>
+
+<sect1 id="cg-manual.impl-details"
+       xreflabel="Implementation details">
+<title>Implementation details</title>
+<para>
+This section talks about details you don't need to know about in order to
+use Cachegrind, but may be of interest to some people.
+</para>
+
+<sect2 id="cg-manual.impl-details.how-cg-works"
+       xreflabel="How Cachegrind works">
+<title>How Cachegrind works</title>
+<para>The best reference for understanding how Cachegrind works is chapter 3 of
+"Dynamic Binary Analysis and Instrumentation", by Nicholas Nethercote.  It
+is available on the <ulink url="&vg-pubs;">Valgrind publications
+page</ulink>.</para>
+</sect2>
+
+<sect2 id="cg-manual.impl-details.file-format"
+       xreflabel="Cachegrind output file format">
+<title>Cachegrind output file format</title>
+<para>The file format is fairly straightforward, basically giving the
+cost centre for every line, grouped by files and
+functions.  Total counts (eg. total cache accesses, total L1
+misses) are calculated when traversing this structure rather than
+during execution, to save time; the cache simulation functions
+are called so often that even one or two extra adds can make a
+sizeable difference.</para>
+
+<para>The file format:</para>
+<programlisting><![CDATA[
+file         ::= desc_line* cmd_line events_line data_line+ summary_line
+desc_line    ::= "desc:" ws? non_nl_string
+cmd_line     ::= "cmd:" ws? cmd
+events_line  ::= "events:" ws? (event ws)+
+data_line    ::= file_line | fn_line | count_line
+file_line    ::= "fl=" filename
+fn_line      ::= "fn=" fn_name
+count_line   ::= line_num ws? (count ws)+
+summary_line ::= "summary:" ws? (count ws)+
+count        ::= num | "."]]></programlisting>
+
+<para>Where:</para>
+<itemizedlist>
+  <listitem>
+    <para><computeroutput>non_nl_string</computeroutput> is any
+    string not containing a newline.</para>
+  </listitem>
+  <listitem>
+    <para><computeroutput>cmd</computeroutput> is a string holding the
+    command line of the profiled program.</para>
+  </listitem>
+  <listitem>
+    <para><computeroutput>event</computeroutput> is a string containing
+    no whitespace.</para>
+  </listitem>
+  <listitem>
+    <para><computeroutput>filename</computeroutput> and
+    <computeroutput>fn_name</computeroutput> are strings.</para>
+  </listitem>
+  <listitem>
+    <para><computeroutput>num</computeroutput> and
+    <computeroutput>line_num</computeroutput> are decimal
+    numbers.</para>
+  </listitem>
+  <listitem>
+    <para><computeroutput>ws</computeroutput> is whitespace.</para>
+  </listitem>
+</itemizedlist>
+
+<para>The contents of the "desc:" lines are printed out at the top
+of the summary.  This is a generic way of providing simulation
+specific information, eg. for giving the cache configuration for
+cache simulation.</para>
+
+<para>More than one line of info can be presented for each file/fn/line number.
+In such cases, the counts for the named events will be accumulated.</para>
+
+<para>Counts can be "." to represent zero.  This makes the files easier for
+humans to read.</para>
+
+<para>The number of counts in each
+<computeroutput>line</computeroutput> and the
+<computeroutput>summary_line</computeroutput> should not exceed
+the number of events in the
+<computeroutput>event_line</computeroutput>.  If the number in
+each <computeroutput>line</computeroutput> is less, cg_annotate
+treats those missing as though they were a "." entry.  This saves space.
+</para>
+
+<para>A <computeroutput>file_line</computeroutput> changes the
+current file name.  A <computeroutput>fn_line</computeroutput>
+changes the current function name.  A
+<computeroutput>count_line</computeroutput> contains counts that
+pertain to the current filename/fn_name.  A "fn="
+<computeroutput>file_line</computeroutput> and a
+<computeroutput>fn_line</computeroutput> must appear before any
+<computeroutput>count_line</computeroutput>s to give the context
+of the first <computeroutput>count_line</computeroutput>s.</para>
+
+<para>Each <computeroutput>file_line</computeroutput> will normally be
+immediately followed by a <computeroutput>fn_line</computeroutput>.  But it
+doesn't have to be.</para>
+
+
+</sect2>
+
+</sect1>
+</chapter>

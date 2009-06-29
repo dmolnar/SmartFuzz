@@ -1,0 +1,44 @@
+
+Running A Demo
+--------------
+
+Here are instructions for running a quick demo of the Catchconv tool:
+
+1. Configure and install valgrind-catchconv
+   From the valgrind-catchconv directory:
+	./configure --prefix=PREFIX
+	make
+	make install
+
+This has been tested with PREFIX=`pwd`/inst . 
+
+2. Set the VALGRIND environment variable to $PREFIX/bin/valgrind
+
+3. Download STP. You want the binary that understands the STP presentation
+   language, NOT the SMT-LIB format.  Set the STP environment variable to 
+   the path of your STP binary. 
+   For example:
+	wget http://theory.stanford.edu/~vganesh/stp.tar.gz
+	tar xjf stp.tar.gz
+	export STP=`pwd`/stp
+
+4. Enter the catchconv/tests directory and run the "demo" script.
+	cd catchconv/tests
+	./demo
+
+5. The demo will now begin. The script compiles a tiny test program,
+   runs Catchconv on the test program, and then uses STP to synthesize
+   some new test cases. Then it runs the test program on the new test cases.
+   If all goes well, the test program reveals an error! 
+
+   Note: this takes between 100 and 120 minutes on a fast machine with
+   4 G of RAM. If you have less than 4 G of RAM, it may error out with
+   an out of memory error. My apologies if this is the case; I'm working
+   on getting the memory usage down.
+
+6. You can then look at the Valgrind IR and corresponding constraints
+   in verbose-latest-out. You can also look at the demo program in
+   demoprog.c . The catchconv/docs directory also includes a technical
+   report with a high-level description of the tool. 
+
+Any questions or comments, please e-mail dmolnar@eecs.berkeley.edu .

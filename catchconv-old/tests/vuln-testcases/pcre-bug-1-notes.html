@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>
+CESA-2007-006 - rev 4
+</title>
+</head>
+<body>
+<h2>CESA-2007-006 - rev 4</h2>
+<p/>
+<br/>
+[See all my vulnerabilities at
+<a href="http://scary.beasts.org/security">http://scary.beasts.org/security</a>]
+<p/>
+<h3>pcre integer / buffer overflows</h3>
+<hr/>
+<br/>Programs affected: pcre
+<br/>Fixed version: v7.3
+<br/>Advisory release date: Nov 7th 2007
+<br/>Severity: compromise of processes using pcre to parse untrusted regex
+patterns.
+<p/>
+Note - the problems noted here were actualy fixed a while ago in v6.7. However,
+my colleague Tavis Ormandy has found multiple serious issues in more recent
+versions. You really should use at least v7.3 if you need a secure pcre.
+<p/>
+More interesting usages of pcre to parse untrusted regular expressions include:
+<b>Apple Safari</b>, including the <b>iPhone</b>. PHP. Others I can't yet
+mention :)
+<p/>
+1) Integer overflow leading to buffer overflow.
+<pre>
+pcre_compile:
+---
+/* Compute the size of data block needed and get it, either from malloc or
+externally provided function. */
+
+size = length + sizeof(real_pcre) + name_count * (max_name_size + 3);
+re = (real_pcre *)(pcre_malloc)(size);
+---
+</pre>
+
+Unfortunately, a malicious regex can easily cause large "name_count" and "max_name_size" such that this calculation overflows.
+Demo:
+<pre>
+(?P&lt;AAA...have 10^6 As in total...AAA&gt;)(?P&lt;0&gt;)(?P&lt;1&gt;)...fill in this sequence...(?P&lt;4293&gt;)
+</pre>
+Causes crash.
+<p/>
+
+2) Uncharacterized crash researching item #1 above:
+Demo:
+<pre>
+(?P&lt;AAA...have 100 As in total...&gt;)(?P&lt;0&gt;)(?P&lt;1&gt;)...fill in this sequence...(?P&lt;3999&gt;)
+</pre>
+This does not trigger the integer overflow present in #1 above, but still crashes with a serious-looking memory error of some kind - possibly a buffer overflow.
+<p/>
+
+3) More possible integer overflow trouble.
+<pre>
+pcre_compile:
+---
+    if (min == 0)
+      {
+      length++;
+      if (max > 0) length += (max - 1) * (duplength + 3 + 2*LINK_SIZE);
+      }
+...
+    else
+      {
+      length += (min - 1) * duplength;
+      if (max > min)   /* Need this test as max=-1 means no limit */
+        length += (max - min) * (duplength + 3 + 2*LINK_SIZE)
+          - (2 + 2*LINK_SIZE);
+      }
+---
+</pre>
+In both these cases, I see no reason why a malicious regexp pattern couldn't cause an integer overflow by using large min / max / duplength values. This will really mess up the critical "length" value.
+<p/>
+<h3>Credits</h3>
+<ul>
+<li>Google - this flaw was discovered in Google's time. I'm with Google's
+Security Team, and we're always recruiting talented security individuals.
+Mail me.</li>
+</ul>
+<br/>CESA-2007-006 - rev 4
+<br/>Chris Evans
+<br/><a href="mailto:scarybeasts@gmail.com">scarybeasts@gmail.com</a>
+</body>
+</html>
+

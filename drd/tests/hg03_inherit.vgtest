@@ -1,0 +1,3 @@
+prereq: ./supported_libpthread
+vgopts: --show-confl-seg=no --var-info=yes
+prog: ../../helgrind/tests/hg03_inherit

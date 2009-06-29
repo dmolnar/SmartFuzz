@@ -1,0 +1,61 @@
+Massif: alloc-fns:
+Massif:   0: malloc
+Massif:   1: __builtin_new
+Massif:   2: operator new(unsigned)
+Massif:   3: operator new(unsigned long)
+Massif:   4: __builtin_vec_new
+Massif:   5: operator new[](unsigned)
+Massif:   6: operator new[](unsigned long)
+Massif:   7: calloc
+Massif:   8: realloc
+Massif:   9: memalign
+Massif:   10: operator new(unsigned, std::nothrow_t const&)
+Massif:   11: operator new[](unsigned, std::nothrow_t const&)
+Massif:   12: operator new(unsigned long, std::nothrow_t const&)
+Massif:   13: operator new[](unsigned long, std::nothrow_t const&)
+Massif:   14: a3
+Massif:   15: a4
+Massif:   16: a5
+Massif:   17: a6
+Massif:   18: a7
+Massif:   19: a8
+Massif:   20: a9
+Massif:   21: a10
+Massif:   22: a11
+Massif:   23: a12
+Massif: ignore-fns:
+Massif:   0: __part_load_locale
+Massif:   1: __time_load_locale
+Massif:   2: dwarf2_unwind_dyld_add_image_hook
+Massif:   3: get_or_create_key_element
+Massif: startup S.  0 (t:0, hp:0, ex:0, st:0)
+Massif:   alloc S.  1 (t:408, hp:400, ex:8, st:0)
+Massif:   alloc S.  2 (t:816, hp:800, ex:16, st:0)
+Massif:   alloc S.  3 (t:1224, hp:1200, ex:24, st:0)
+Massif:   alloc S.  4 (t:1632, hp:1600, ex:32, st:0)
+Massif:   alloc S.  5 (t:2040, hp:2000, ex:40, st:0)
+Massif:   alloc S.  6 (t:2448, hp:2400, ex:48, st:0)
+Massif:   alloc S.  7 (t:2856, hp:2800, ex:56, st:0)
+Massif:   alloc S.  8 (t:3264, hp:3200, ex:64, st:0)
+Massif:   alloc Sd  9 (t:3672, hp:3600, ex:72, st:0)
+Massif:   alloc S. 10 (t:4080, hp:4000, ex:80, st:0)
+Massif: heap allocs:           10
+Massif: heap reallocs:         0
+Massif: heap frees:            0
+Massif: ignored heap allocs:   ...
+Massif: ignored heap frees:    ...
+Massif: ignored heap reallocs: ...
+Massif: stack allocs:          0
+Massif: stack frees:           0
+Massif: XPts:                 ...
+Massif: top-XPts:             ...
+Massif: XPt init expansions:  ...
+Massif: XPt later expansions: ...
+Massif: SXPt allocs:          ...
+Massif: SXPt frees:           ...
+Massif: skipped snapshots:     0
+Massif: real snapshots:        11
+Massif: detailed snapshots:    1
+Massif: peak snapshots:        0
+Massif: cullings:              0
+Massif: XCon redos:           ...

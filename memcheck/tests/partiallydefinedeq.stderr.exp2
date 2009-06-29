@@ -1,0 +1,20 @@
+
+Currently running on ppc32/64: this test should give 3 errors, not 2.
+Conditional jump or move depends on uninitialised value(s)
+   at 0x........: foo (partiallydefinedeq.c:15)
+   by 0x........: main (partiallydefinedeq.c:37)
+
+Conditional jump or move depends on uninitialised value(s)
+   at 0x........: foo (partiallydefinedeq.c:15)
+   by 0x........: main (partiallydefinedeq.c:45)
+
+Conditional jump or move depends on uninitialised value(s)
+   at 0x........: foo (partiallydefinedeq.c:15)
+   by 0x........: main (partiallydefinedeq.c:52)
+
+ERROR SUMMARY: 3 errors from 3 contexts (suppressed: 0 from 0)
+malloc/free: in use at exit: ... bytes in ... blocks.
+malloc/free: ... allocs, ... frees, ... bytes allocated.
+For a detailed leak analysis,  rerun with: --leak-check=yes
+For counts of detected errors, rerun with: -v
+Use --track-origins=yes to see where uninitialised values come from

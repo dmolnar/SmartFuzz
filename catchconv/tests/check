@@ -1,0 +1,13 @@
+#!/bin/sh
+gcc -static -O0 -g simpletest.c -o simpletest
+$VALGRIND --tool=catchconv --mem-regions=simpletest.memregions -q --log-file-exactly=out ./simpletest 5
+$VALGRIND --tool=catchconv --mem-regions=simpletest.memregions --trace-notbelow=0 --trace-flags=11100000 --log-file-exactly=verbose-latest-out ./simpletest 5 
+sed -e s/XXX/%/\g out > out1
+echo "ASSERT(TRUE);" >> out1
+$STP out1
+grep XXX out > unsup
+grep Unhandled unsup | uniq  > unhand
+grep Unsupported unsup | uniq > unsup-uniq
+cp out1 out1-query.stp
+echo "ASSERT(TRUE);" >> out1-query.stp
+echo `grep QUERY out1 | cut -d" " -f2 | head -n1` >> out1-query.stp

@@ -1,0 +1,189 @@
+cgIR.c: In function ‘cgPrintHWord’:
+cgIR.c:200: warning: format ‘%x’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+cgIR.c:208: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintTmpName’:
+cgIR.c:235: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:236: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:237: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:238: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:239: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintExtTmpName’:
+cgIR.c:250: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:251: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:252: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:253: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:254: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMachState’:
+cgIR.c:279: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:280: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:281: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMemState’:
+cgIR.c:294: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:295: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:296: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMemRegionState’:
+cgIR.c:311: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:312: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:313: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:314: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPreamble’:
+cgIR.c:663: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPutUnconstrained_32Bit’:
+cgIR.c:725: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:737: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c: In function ‘cgEmitPutConstStmt_32bit’:
+cgIR.c:893: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:899: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:900: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:901: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:913: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:914: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:920: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:927: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:928: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:934: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c: In function ‘cgEmitPutTmpStmt_32bit’:
+cgIR.c:1000: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1007: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1008: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1009: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1012: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1013: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1021: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1022: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1028: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1036: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1037: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1043: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1066: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c: In function ‘cgEmitStoreConstConst’:
+cgIR.c:1118: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreTmpConst’:
+cgIR.c:1161: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1167: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1172: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1210: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreConstTmp’:
+cgIR.c:1282: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreTmpTmp’:
+cgIR.c:1323: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1329: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1334: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1372: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreConstConcrete’:
+cgIR.c:1450: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgSetJumpNotTaken’:
+cgIR.c:1485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPathCond’:
+cgIR.c:1540: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1541: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1542: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1546: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1547: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1548: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1560: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1561: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1562: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1566: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1567: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1568: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1575: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1576: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1577: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitExitTmpConstraints’:
+cgIR.c:1615: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1616: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1617: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1621: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1622: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1623: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1643: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1644: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1645: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1662: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1663: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1664: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1676: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1677: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1678: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1679: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreInfo’:
+cgIR.c:1696: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1697: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1689: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitStoreInfoByte’:
+cgIR.c:1725: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1731: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpGetConstraints_32bit’:
+cgIR.c:2145: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2146: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2147: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2220: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2221: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 4 has type ‘HWord’
+cgIR.c:2237: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2238: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2261: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2262: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpOffsetConstraints’:
+cgIR.c:2443: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2458: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c: In function ‘cgEmitTmpLoadTmpConstraints’:
+cgIR.c:2485: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 5 has type ‘HWord’
+cgIR.c:2501: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:2508: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2513: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2518: warning: passing argument 2 of ‘isMemOriginP’ from incompatible pointer type
+cgIR.c:2529: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2530: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+cgIR.c:2541: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2542: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+cgIR.c:2553: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2560: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2588: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2588: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2591: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2591: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2635: warning: too many arguments for format
+cgIR.c:2642: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpAssignConcrete’:
+cgIR.c:2696: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpLoadConcrete’:
+cgIR.c:2733: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2727: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitTmpLoadConstConstraints’:
+cgIR.c:2865: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2857: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitTmpTmpConstraints’:
+cgIR.c:2976: warning: too many arguments for format
+cgIR.c: In function ‘cgAddTmpMux0X’:
+cgIR.c:3193: error: ‘Ist_RdTmp’ undeclared (first use in this function)
+cgIR.c:3193: error: (Each undeclared identifier is reported only once
+cgIR.c:3193: error: for each function it appears in.)
+cgIR.c:3195: error: ‘union <anonymous>’ has no member named ‘RdTmp’
+cgIR.c:3267: warning: passing argument 1 of ‘getStructOf’ makes integer from pointer without a cast
+cgIR.c:3267: warning: passing argument 2 of ‘getStructOf’ makes integer from pointer without a cast
+cgIR.c:3268: warning: assignment makes integer from pointer without a cast
+cgIR.c:3269: warning: assignment makes integer from pointer without a cast
+cgIR.c:3270: warning: assignment makes integer from pointer without a cast
+cgIR.c:3271: warning: assignment makes integer from pointer without a cast
+cgIR.c:3272: warning: assignment makes integer from pointer without a cast
+cgIR.c:3273: warning: assignment makes integer from pointer without a cast
+cgIR.c:3288: warning: passing argument 1 of ‘mkIRExpr_HWord’ makes integer from pointer without a cast
+cgIR.c: In function ‘cgAddTmpStmtConstraints’:
+cgIR.c:3457: error: ‘Ist_Tmp’ undeclared (first use in this function)
+cgIR.c:3525: error: ‘rOOGOADHIAFhsTmpName’ undeclared (first use in this function)
+cgIR.c: In function ‘cgAddExitPre’:
+cgIR.c:3659: warning: implicit declaration of function ‘IRExpr_Tmp’
+cgIR.c:3661: warning: passing argument 3 of ‘mkIRExprVec_4’ makes pointer from integer without a cast
+cgIR.c: At top level:
+cgIR.c:3724: warning: no previous prototype for ‘cgEmitMallocQueries’
+cgIR.c:3780: warning: no previous prototype for ‘cgAddEntryQueries’
+cgIR.c: In function ‘cgIRStmt’:
+cgIR.c:3845: error: ‘Ist_Tmp’ undeclared (first use in this function)
+cgIR.c:3859: error: ‘Ist_MFence’ undeclared (first use in this function)

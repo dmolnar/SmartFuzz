@@ -1,0 +1,355 @@
+{
+   dl
+   drd:ConflictingAccess
+   fun:_dl_fixup
+   fun:_dl_runtime_resolve
+}
+{
+   dl
+   drd:ConflictingAccess
+   fun:_dl_fini
+   fun:exit
+}
+{
+   dl-2.6.*
+   drd:ConflictingAccess
+   obj:/lib*/ld-*.so
+   fun:exit
+}
+{
+   dl-2.6.*
+   drd:ConflictingAccess
+   obj:/lib*/ld-*.so
+   obj:/lib*/ld-*.so
+}
+{
+   dl-dlsym-1
+   drd:ConflictingAccess
+   ...
+   fun:_dl_sym
+}
+{
+   dl-dlsym-2
+   drd:ConflictingAccess
+   ...
+   fun:dlsym
+}
+{
+   dl-dlsym-3
+   drd:ConflictingAccess
+   ...
+   fun:__libc_dlsym
+}
+{
+   dl-backtrace_symbols
+   drd:ConflictingAccess
+   fun:_dl_addr
+   fun:backtrace_symbols
+}
+{
+   libc-stdio
+   drd:ConflictingAccess
+   obj:/lib*/libc-*
+}
+{
+   libc
+   drd:ConflictingAccess
+   fun:__libc_enable_asynccancel
+   obj:/lib*/libc-*
+}
+{
+   libc
+   drd:ConflictingAccess
+   fun:__libc_disable_asynccancel
+   obj:/lib*/libc-*
+}
+{
+   libc-exit-io-cleanup
+   drd:ConflictingAccess
+   ...
+   fun:exit
+}
+{
+   libc-random_r
+   drd:ConflictingAccess
+   fun:random_r
+}
+{
+   libc:stdio
+   drd:ConflictingAccess
+   ...
+   fun:_IO_file_xsputn*
+   fun:vfprintf
+}
+{
+   libc:stdio
+   drd:ConflictingAccess
+   ...
+   fun:fflush
+}
+{
+   librt
+   drd:ConflictingAccess
+   fun:__librt_enable_asynccancel
+}
+{
+   librt
+   drd:ConflictingAccess
+   fun:__librt_disable_asynccancel
+}
+{
+   libstdc++
+   drd:ConflictingAccess
+   fun:_ZN9__gnu_cxx12__atomic_addEPVii
+}
+{
+   libstdc++ std::string::string()
+   drd:ConflictingAccess
+   fun:_ZNSsC1ERKSs
+}
+{
+   libstdc++
+   drd:ConflictingAccess
+   fun:_ZN9__gnu_cxx18__exchange_and_addEPVii
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:start_thread
+   fun:clone
+}
+{
+   pthread
+   drd:ConflictingAccess
+   obj:/lib*/libpthread-*.so
+   fun:start_thread
+   fun:clone
+}
+{
+   pthread
+   drd:ConflictingAccess
+   ...
+   fun:pthread_create*
+}
+{
+   pthread
+   drd:ConflictingAccess
+   ...
+   fun:__libc_thread_freeres
+   fun:start_thread
+   fun:clone
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:__nptl_deallocate_tsd
+   fun:start_thread
+   fun:clone
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_mutex_lock
+   fun:pthread_mutex_lock
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:__pthread_mutex_cond_lock
+   fun:pthread_cond_wait@@GLIBC_*
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_join
+   fun:pthread_join
+}
+{
+   pthread
+   drd:ConflictingAccess
+   ...
+   fun:__deallocate_stack
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:__free_tcb
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:__pthread_enable_asynccancel
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:__pthread_disable_asynccancel
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_cancel
+}
+{
+   pthread
+   drd:ConflictingAccess
+   ...
+   fun:pthread_cancel_init
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:sigcancel_handler
+   obj:/lib*/libpthread-*
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_detach
+   fun:pthread_detach
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_getspecific
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_setspecific
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:pthread_key_delete
+}
+{
+   pthread
+   drd:ConflictingAccess
+   fun:_pthread_cleanup_push_defer
+}
+{
+   pthread-unwind
+   drd:ConflictingAccess
+   ...
+   fun:__pthread_unwind
+}
+{
+   pthread-unwind
+   drd:ConflictingAccess
+   ...
+   fun:_Unwind_Resume
+}
+{
+   pthread-unwind
+   drd:ConflictingAccess
+   fun:_Unwind_GetCFA
+   fun:unwind_stop
+}
+{
+   pthread-unwind
+   drd:ConflictingAccess
+   fun:uw_update_context
+   fun:_Unwind_ForcedUnwind_Phase2
+}
+{
+   pthread-unwind
+   drd:ConflictingAccess
+   fun:uw_frame_state_for
+   fun:_Unwind_ForcedUnwind_Phase2
+}
+{
+   gomp
+   drd:ConflictingAccess
+   obj:/usr/lib*/libgomp.so*
+}
+{
+   libX11-XCreateFontSet
+   drd:CondErr
+   fun:pthread_cond_init*
+   fun:_XReply
+   fun:XListFontsWithInfo
+   obj:/usr/lib*/libX11.so*
+   fun:XCreateOC
+   fun:XCreateFontSet
+}
+{
+   libxcb-xcb_wait_for_reply
+   drd:CondErr
+   fun:pthread_cond_destroy*
+   fun:xcb_wait_for_reply
+}
+{
+   libglib-access-g_threads_got_initialized
+   drd:ConflictingAccess
+   ...
+   fun:g_slice_alloc
+   fun:g_ptr_array_sized_new
+}
+{
+   libglib-access-g_threads_got_initialized
+   drd:ConflictingAccess
+   fun:_ZN27QEventDispatcherGlibPrivateC1EP13_GMainContext
+   fun:_ZN20QEventDispatcherGlibC1EP7QObject
+   obj:/usr/lib*/libQtCore.so.4.*
+   obj:/usr/lib*/libQtCore.so.4.*
+}
+{
+   libglib-access-g_mem_initialized
+   drd:ConflictingAccess
+   fun:g_malloc0
+}
+{
+   libglib-g_private_get_posix_impl
+   drd:ConflictingAccess
+   fun:g_private_get_posix_impl
+}
+{
+   libglib-g_private_set_posix_impl
+   drd:ConflictingAccess
+   fun:g_private_set_posix_impl
+}
+{
+   libglib-g_get_language_names
+   drd:ConflictingAccess
+   fun:g_slice_free_chain_with_offset
+}
+{
+   libQtCore-deref-that-calls-QThreadData-destructor
+   drd:ConflictingAccess
+   fun:_ZN11QThreadDataD1Ev
+   fun:_ZN11QThreadData5derefEv
+   obj:/usr/lib*/libQtCore.so.4.*
+}
+{
+   libQtCore-4.0/4.1-Q_GLOBAL_STATIC-connectionList
+   drd:ConflictingAccess
+   obj:/usr/lib*/libQtCore.so.4.*
+   fun:_ZN11QMetaObject8activateEP7QObjectiiPPv
+   fun:_ZN11QMetaObject8activateEP7QObjectPKS_iPPv
+}
+{
+   libQtCore-QObjectPrivate::clearGuards(QObject*)
+   drd:ConflictingAccess
+   fun:_ZN14QReadWriteLock12lockForWriteEv
+   fun:_ZN14QObjectPrivate11clearGuardsEP7QObject
+   fun:_ZN7QObjectD2Ev
+}
+{
+   libQtCore-QObjectPrivate::clearGuards(QObject*)
+   drd:ConflictingAccess
+   fun:_ZN14QReadWriteLock12lockForWriteEv
+   fun:_ZN12QWriteLocker6relockEv
+   fun:_ZN12QWriteLockerC1EP14QReadWriteLock
+   fun:_ZN14QObjectPrivate11clearGuardsEP7QObject
+   fun:_ZN7QObjectD2Ev
+   fun:_ZN24QAbstractEventDispatcherD2Ev
+   fun:_ZN20QEventDispatcherGlibD0Ev
+}
+{
+   libboost_thread_1
+   drd:ConflictingAccess
+   ...
+   fun:_ZN5boost9call_onceIPFvvEEEvRNS_9once_flagET_
+   fun:_ZN5boost6detail23get_current_thread_dataEv
+}

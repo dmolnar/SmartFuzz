@@ -1,0 +1,493 @@
+Making all in .
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ca_main.o -MD -MP -MF .deps/catchconv_x86_darwin-ca_main.Tpo -c -o catchconv_x86_darwin-ca_main.o `test -f 'ca_main.c' || echo './'`ca_main.c
+ca_main.c: In function ‘ca_read_memregions_from_file’:
+ca_main.c:92: warning: ISO C90 forbids mixed declarations and code
+ca_main.c: In function ‘ca_read_origins_from_file’:
+ca_main.c:121: warning: unused variable ‘originMem’
+ca_main.c:120: warning: unused variable ‘line’
+ca_main.c:119: warning: unused variable ‘originFileDes’
+ca_main.c: In function ‘ca_make_args_origin’:
+ca_main.c:147: warning: unused variable ‘a’
+ca_main.c:146: warning: unused variable ‘i’
+ca_main.c: In function ‘ca_instrument’:
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 4 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 5 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 6 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 7 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 8 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 9 has type ‘long unsigned int’
+ca_main.c:311: warning: format ‘%d’ expects type ‘int’, but argument 10 has type ‘long unsigned int’
+ca_main.c: In function ‘ca_printStats’:
+ca_main.c:390: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ca_main.c:391: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ca_main.c:392: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ca_main.c: In function ‘ca_pre_clo_init’:
+ca_main.c:449: warning: passing argument 1 of ‘vgPlain_track_post_reg_write’ from incompatible pointer type
+ca_main.c:450: warning: passing argument 1 of ‘vgPlain_track_post_reg_write_clientcall_return’ from incompatible pointer type
+mv -f .deps/catchconv_x86_darwin-ca_main.Tpo .deps/catchconv_x86_darwin-ca_main.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-cgIR.o -MD -MP -MF .deps/catchconv_x86_darwin-cgIR.Tpo -c -o catchconv_x86_darwin-cgIR.o `test -f 'cgIR.c' || echo './'`cgIR.c
+cgIR.c: In function ‘cgPrintHWord’:
+cgIR.c:200: warning: format ‘%x’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+cgIR.c:208: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintTmpName’:
+cgIR.c:235: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:236: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:237: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:238: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:239: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintExtTmpName’:
+cgIR.c:250: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:251: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:252: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:253: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:254: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMachState’:
+cgIR.c:279: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:280: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:281: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMemState’:
+cgIR.c:294: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:295: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:296: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgPrintMemRegionState’:
+cgIR.c:311: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:312: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:313: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:314: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPreamble’:
+cgIR.c:663: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPutUnconstrained_32Bit’:
+cgIR.c:725: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:737: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c: In function ‘cgEmitPutConstStmt_32bit’:
+cgIR.c:893: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:899: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:900: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:901: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:913: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:914: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:920: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:927: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:928: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:934: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c: In function ‘cgEmitPutTmpStmt_32bit’:
+cgIR.c:1000: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1007: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1008: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1009: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1012: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1013: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1021: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1022: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1028: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1036: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c:1037: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1043: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1066: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘ULong’
+cgIR.c: In function ‘cgEmitStoreConstConst’:
+cgIR.c:1118: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreTmpConst’:
+cgIR.c:1161: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1167: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1172: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1210: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreConstTmp’:
+cgIR.c:1282: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreTmpTmp’:
+cgIR.c:1323: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:1329: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1334: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1372: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreConstConcrete’:
+cgIR.c:1450: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgSetJumpNotTaken’:
+cgIR.c:1485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitPathCond’:
+cgIR.c:1540: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1541: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1542: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1546: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1547: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1548: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1560: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1561: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1562: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1566: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1567: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1568: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1575: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1576: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1577: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitExitTmpConstraints’:
+cgIR.c:1615: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1616: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1617: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1621: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1622: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1623: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1643: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1644: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1645: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1662: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1663: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1664: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1676: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1677: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1678: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:1679: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitStoreInfo’:
+cgIR.c:1696: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1697: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1689: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitStoreInfoByte’:
+cgIR.c:1725: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:1731: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpGetConstraints_32bit’:
+cgIR.c:2145: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2146: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2147: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2220: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2221: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2231: warning: format ‘%d’ expects type ‘int’, but argument 4 has type ‘HWord’
+cgIR.c:2237: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2238: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2261: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2262: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpOffsetConstraints’:
+cgIR.c:2443: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2458: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c: In function ‘cgEmitTmpLoadTmpConstraints’:
+cgIR.c:2485: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+cgIR.c:2485: warning: format ‘%u’ expects type ‘unsigned int’, but argument 5 has type ‘HWord’
+cgIR.c:2501: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+cgIR.c:2508: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2513: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2518: warning: passing argument 2 of ‘isMemOriginP’ from incompatible pointer type
+cgIR.c:2529: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2530: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+cgIR.c:2541: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2542: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+cgIR.c:2553: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2560: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2588: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2588: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2591: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+cgIR.c:2591: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+cgIR.c:2635: warning: too many arguments for format
+cgIR.c:2642: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpAssignConcrete’:
+cgIR.c:2696: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c: In function ‘cgEmitTmpLoadConcrete’:
+cgIR.c:2733: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2727: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitTmpLoadConstConstraints’:
+cgIR.c:2865: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIR.c:2857: warning: unused variable ‘addrChunk’
+cgIR.c: In function ‘cgEmitTmpTmpConstraints’:
+cgIR.c:2976: warning: too many arguments for format
+cgIR.c: In function ‘cgAddTmpMux0X’:
+cgIR.c:3267: warning: passing argument 1 of ‘getStructOf’ makes integer from pointer without a cast
+cgIR.c:3267: warning: passing argument 2 of ‘getStructOf’ makes integer from pointer without a cast
+cgIR.c:3268: warning: assignment makes integer from pointer without a cast
+cgIR.c:3269: warning: assignment makes integer from pointer without a cast
+cgIR.c:3270: warning: assignment makes integer from pointer without a cast
+cgIR.c:3271: warning: assignment makes integer from pointer without a cast
+cgIR.c:3272: warning: assignment makes integer from pointer without a cast
+cgIR.c:3273: warning: assignment makes integer from pointer without a cast
+cgIR.c:3288: warning: passing argument 1 of ‘mkIRExpr_HWord’ makes integer from pointer without a cast
+cgIR.c: At top level:
+cgIR.c:3724: warning: no previous prototype for ‘cgEmitMallocQueries’
+cgIR.c:3780: warning: no previous prototype for ‘cgAddEntryQueries’
+cgIR.c: In function ‘cgEmitTmpLoadConstConstraints’:
+cgIR.c:2928: warning: ‘addrConstSize’ is used uninitialized in this function
+cgIR.c:2928: warning: ‘addrOffset’ is used uninitialized in this function
+mv -f .deps/catchconv_x86_darwin-cgIR.Tpo .deps/catchconv_x86_darwin-cgIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-cgIRUnop.o -MD -MP -MF .deps/catchconv_x86_darwin-cgIRUnop.Tpo -c -o catchconv_x86_darwin-cgIRUnop.o `test -f 'cgIRUnop.c' || echo './'`cgIRUnop.c
+cgIRUnop.c:87: warning: no previous prototype for ‘cgEmitUnopConst’
+cgIRUnop.c: In function ‘cgEmit32to16Tmp’:
+cgIRUnop.c:516: warning: too many arguments for format
+cgIRUnop.c: In function ‘cgEmit32to8Const’:
+cgIRUnop.c:529: warning: too many arguments for format
+cgIRUnop.c: In function ‘cgEmit32to16Const’:
+cgIRUnop.c:544: warning: too many arguments for format
+mv -f .deps/catchconv_x86_darwin-cgIRUnop.Tpo .deps/catchconv_x86_darwin-cgIRUnop.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-cgIRBinop.o -MD -MP -MF .deps/catchconv_x86_darwin-cgIRBinop.Tpo -c -o catchconv_x86_darwin-cgIRBinop.o `test -f 'cgIRBinop.c' || echo './'`cgIRBinop.c
+cgIRBinop.c: In function ‘cgEmitTmpBinopConstConst’:
+cgIRBinop.c:388: warning: too many arguments for format
+cgIRBinop.c:440: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:463: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:484: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c: In function ‘cgEmitTmpBinopTmpConst’:
+cgIRBinop.c:734: warning: too many arguments for format
+cgIRBinop.c:755: warning: too many arguments for format
+cgIRBinop.c:809: warning: too many arguments for format
+cgIRBinop.c:814: warning: too many arguments for format
+cgIRBinop.c:826: warning: too many arguments for format
+cgIRBinop.c:831: warning: too many arguments for format
+cgIRBinop.c:855: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:880: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:903: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:567: warning: unused variable ‘uintMin’
+cgIRBinop.c: In function ‘cgEmitTmpBinopConstTmp’:
+cgIRBinop.c:1177: warning: too many arguments for format
+cgIRBinop.c:1218: warning: too many arguments for format
+cgIRBinop.c:1233: warning: too many arguments for format
+cgIRBinop.c:1335: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:1370: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:1404: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:1439: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:1474: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+cgIRBinop.c:1015: warning: unused variable ‘uintMin’
+cgIRBinop.c: In function ‘cgEmitTmpBinopTmpTmp’:
+cgIRBinop.c:1660: warning: too many arguments for format
+cgIRBinop.c:1738: warning: too many arguments for format
+cgIRBinop.c:1779: warning: too many arguments for format
+cgIRBinop.c:1783: warning: too many arguments for format
+cgIRBinop.c:1787: warning: too many arguments for format
+cgIRBinop.c:1795: warning: too many arguments for format
+cgIRBinop.c:1840: warning: too many arguments for format
+cgIRBinop.c:1521: warning: unused variable ‘uintMin’
+mv -f .deps/catchconv_x86_darwin-cgIRBinop.Tpo .deps/catchconv_x86_darwin-cgIRBinop.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ogIR.o -MD -MP -MF .deps/catchconv_x86_darwin-ogIR.Tpo -c -o catchconv_x86_darwin-ogIR.o `test -f 'ogIR.c' || echo './'`ogIR.c
+ogIR.c: In function ‘setTypeOf’:
+ogIR.c:216: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:217: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:218: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:220: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘getStructOf’:
+ogIR.c:249: warning: passing argument 2 of ‘vgPlain_HT_lookup’ makes integer from pointer without a cast
+ogIR.c:264: warning: ISO C90 forbids mixed declarations and code
+ogIR.c:245: warning: unused variable ‘same_block’
+ogIR.c: In function ‘removeStructOf’:
+ogIR.c:277: warning: ISO C90 forbids mixed declarations and code
+ogIR.c: In function ‘removeStructOfHelper’:
+ogIR.c:290: warning: passing argument 1 of ‘vgPlain_free’ makes pointer from integer without a cast
+ogIR.c:297: warning: passing argument 1 of ‘vgPlain_free’ makes pointer from integer without a cast
+ogIR.c: In function ‘ogTest’:
+ogIR.c:392: warning: too few arguments for format
+ogIR.c: In function ‘ogEmitStackConstraints’:
+ogIR.c:402: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘Addr’
+ogIR.c:403: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘SizeT’
+ogIR.c:409: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘long unsigned int’
+ogIR.c:410: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitRegConstraint’:
+ogIR.c:470: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:471: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:486: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:488: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:495: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:497: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitTmpConstraint’:
+ogIR.c:518: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘ULong’
+ogIR.c:519: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:520: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:535: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘ULong’
+ogIR.c:536: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:537: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘ULong’
+ogIR.c:538: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:543: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘ULong’
+ogIR.c:544: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:545: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘ULong’
+ogIR.c:546: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogTmp2TmpAliasHelper’:
+ogIR.c:600: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:601: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:602: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:603: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:614: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:615: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:616: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogTmp2GetAliasHelper’:
+ogIR.c:659: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:660: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:662: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:673: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:674: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogTmp2LoadAliasHelper’:
+ogIR.c:717: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:718: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:720: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:731: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:732: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitNewTmpTyvar’:
+ogIR.c:829: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:830: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:831: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitBinopTmpTmpTypeCons’:
+ogIR.c:858: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:859: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:860: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:861: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:862: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:863: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:864: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:875: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:876: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:877: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:891: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:892: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:893: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:911: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:912: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:913: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitBinopTmpConstTypeCons’:
+ogIR.c:934: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:935: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:936: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:937: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:938: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:949: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:950: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:951: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:963: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:964: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:965: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitPutConstConstraints’:
+ogIR.c:1120: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitPutTmpConstraints’:
+ogIR.c:1131: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1132: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1133: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1144: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1145: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1146: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitStoreTmp2TmpConstraints’:
+ogIR.c:1206: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:1207: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1208: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1218: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1219: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+ogIR.c:1220: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘ogEmitStoreTmp2ConstConstraints’:
+ogIR.c:1238: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c:1239: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ogIR.c: In function ‘getStructOf’:
+ogIR.c:249: warning: ‘node’ is used uninitialized in this function
+mv -f .deps/catchconv_x86_darwin-ogIR.Tpo .deps/catchconv_x86_darwin-ogIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-isIR.o -MD -MP -MF .deps/catchconv_x86_darwin-isIR.Tpo -c -o catchconv_x86_darwin-isIR.o `test -f 'isIR.c' || echo './'`isIR.c
+isIR.c: In function ‘isSetKeyOrigin’:
+isIR.c:63: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:63: warning: format ‘%u’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+isIR.c: In function ‘isSetKeySymbolic’:
+isIR.c:94: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:105: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c: In function ‘isSetKeyConcrete’:
+isIR.c:125: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c: In function ‘isSetRegConcrete’:
+isIR.c:137: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c: In function ‘isSetMemConcrete’:
+isIR.c:149: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:149: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+isIR.c: In function ‘isFlowToMem’:
+isIR.c:168: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:168: warning: format ‘%x’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+isIR.c:168: warning: format ‘%d’ expects type ‘int’, but argument 4 has type ‘HWord’
+isIR.c:181: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:181: warning: format ‘%x’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+isIR.c:181: warning: format ‘%d’ expects type ‘int’, but argument 4 has type ‘HWord’
+isIR.c: In function ‘isFlowMapByKey’:
+isIR.c:322: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:323: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:334: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:335: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c: In function ‘isFlowMapByKeyBinary’:
+isIR.c:349: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:349: warning: format ‘%x’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+isIR.c:349: warning: format ‘%x’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+isIR.c: In function ‘isFlowMapByKeyTrinary’:
+isIR.c:386: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+isIR.c:386: warning: format ‘%x’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+isIR.c:386: warning: format ‘%x’ expects type ‘unsigned int’, but argument 4 has type ‘HWord’
+isIR.c:386: warning: format ‘%x’ expects type ‘unsigned int’, but argument 5 has type ‘HWord’
+mv -f .deps/catchconv_x86_darwin-isIR.Tpo .deps/catchconv_x86_darwin-isIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ca_malloc_wrappers.o -MD -MP -MF .deps/catchconv_x86_darwin-ca_malloc_wrappers.Tpo -c -o catchconv_x86_darwin-ca_malloc_wrappers.o `test -f 'ca_malloc_wrappers.c' || echo './'`ca_malloc_wrappers.c
+ca_malloc_wrappers.c: In function ‘CA_new_block’:
+ca_malloc_wrappers.c:58: warning: format ‘%ld’ expects type ‘long int’, but argument 2 has type ‘ThreadId’
+ca_malloc_wrappers.c:59: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘Addr’
+ca_malloc_wrappers.c:60: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘SizeT’
+ca_malloc_wrappers.c: In function ‘CA_malloc’:
+ca_malloc_wrappers.c:101: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘long int’
+ca_malloc_wrappers.c: In function ‘CA_free’:
+ca_malloc_wrappers.c:187: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘void *’
+ca_malloc_wrappers.c: In function ‘CA__builtin_delete’:
+ca_malloc_wrappers.c:196: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘void *’
+ca_malloc_wrappers.c: In function ‘CA__builtin_vec_delete’:
+ca_malloc_wrappers.c:205: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘void *’
+ca_malloc_wrappers.c: In function ‘CA_realloc’:
+ca_malloc_wrappers.c:217: warning: implicit declaration of function ‘vgPlain_arena_realloc’
+ca_malloc_wrappers.c:223: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘long int’
+mv -f .deps/catchconv_x86_darwin-ca_malloc_wrappers.Tpo .deps/catchconv_x86_darwin-ca_malloc_wrappers.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ca_interval_dumb.o -MD -MP -MF .deps/catchconv_x86_darwin-ca_interval_dumb.Tpo -c -o catchconv_x86_darwin-ca_interval_dumb.o `test -f 'ca_interval_dumb.c' || echo './'`ca_interval_dumb.c
+In file included from ca_interval_dumb.c:46:
+../include/pub_tool_libcproc.h:60: warning: ‘struct vki_rlimit’ declared inside parameter list
+../include/pub_tool_libcproc.h:60: warning: its scope is only this definition or declaration, which is probably not what you want
+../include/pub_tool_libcproc.h:61: warning: ‘struct vki_rlimit’ declared inside parameter list
+ca_interval_dumb.c: In function ‘caDeclareChunk’:
+ca_interval_dumb.c:149: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ca_interval_dumb.c:150: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ca_interval_dumb.c:151: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+ca_interval_dumb.c:152: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+mv -f .deps/catchconv_x86_darwin-ca_interval_dumb.Tpo .deps/catchconv_x86_darwin-ca_interval_dumb.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ca_callbacks.o -MD -MP -MF .deps/catchconv_x86_darwin-ca_callbacks.Tpo -c -o catchconv_x86_darwin-ca_callbacks.o `test -f 'ca_callbacks.c' || echo './'`ca_callbacks.c
+In file included from ca_callbacks.c:38:
+../include/pub_tool_libcfile.h:86: warning: ‘struct vki_dirent’ declared inside parameter list
+../include/pub_tool_libcfile.h:86: warning: its scope is only this definition or declaration, which is probably not what you want
+ca_callbacks.c: In function ‘ca_track_pre_mem_write’:
+ca_callbacks.c:76: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘SizeT’
+ca_callbacks.c:94: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘OffT’
+ca_callbacks.c: In function ‘ca_track_post_mem_write’:
+ca_callbacks.c:116: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘Addr’
+ca_callbacks.c:117: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘SizeT’
+ca_callbacks.c:143: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘Addr’
+ca_callbacks.c:143: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘OffT’
+ca_callbacks.c: In function ‘ca_track_post_reg_write’:
+ca_callbacks.c:194: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+ca_callbacks.c:195: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘SizeT’
+ca_callbacks.c: In function ‘ca_track_post_reg_write_clientcall_return’:
+ca_callbacks.c:213: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘OffT’
+ca_callbacks.c:214: warning: format ‘%u’ expects type ‘unsigned int’, but argument 2 has type ‘SizeT’
+ca_callbacks.c:215: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘Addr’
+ca_callbacks.c: In function ‘ca_post_syscall’:
+ca_callbacks.c:262: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘UWord’
+mv -f .deps/catchconv_x86_darwin-ca_callbacks.Tpo .deps/catchconv_x86_darwin-ca_callbacks.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-trackmemIR.o -MD -MP -MF .deps/catchconv_x86_darwin-trackmemIR.Tpo -c -o catchconv_x86_darwin-trackmemIR.o `test -f 'trackmemIR.c' || echo './'`trackmemIR.c
+trackmemIR.c: In function ‘tmClearAddr’:
+trackmemIR.c:55: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+trackmemIR.c:55: warning: format ‘%d’ expects type ‘int’, but argument 3 has type ‘HWord’
+trackmemIR.c: In function ‘tmUpdate’:
+trackmemIR.c:104: warning: format ‘%x’ expects type ‘unsigned int’, but argument 2 has type ‘HWord’
+trackmemIR.c:104: warning: format ‘%x’ expects type ‘unsigned int’, but argument 3 has type ‘HWord’
+trackmemIR.c:106: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+trackmemIR.c:107: warning: format ‘%d’ expects type ‘int’, but argument 2 has type ‘HWord’
+mv -f .deps/catchconv_x86_darwin-trackmemIR.Tpo .deps/catchconv_x86_darwin-trackmemIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-findRepMov.o -MD -MP -MF .deps/catchconv_x86_darwin-findRepMov.Tpo -c -o catchconv_x86_darwin-findRepMov.o `test -f 'findRepMov.c' || echo './'`findRepMov.c
+findRepMov.c:75: warning: no previous prototype for ‘emitFlaggedTmpRepMov’
+findRepMov.c: In function ‘emitFlaggedTmpRepMov’:
+findRepMov.c:86: warning: enumeration value ‘BogusTy’ not handled in switch
+mv -f .deps/catchconv_x86_darwin-findRepMov.Tpo .deps/catchconv_x86_darwin-findRepMov.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ufOgIR.o -MD -MP -MF .deps/catchconv_x86_darwin-ufOgIR.Tpo -c -o catchconv_x86_darwin-ufOgIR.o `test -f 'ufOgIR.c' || echo './'`ufOgIR.c
+mv -f .deps/catchconv_x86_darwin-ufOgIR.Tpo .deps/catchconv_x86_darwin-ufOgIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-ufInstOgIR.o -MD -MP -MF .deps/catchconv_x86_darwin-ufInstOgIR.Tpo -c -o catchconv_x86_darwin-ufInstOgIR.o `test -f 'ufInstOgIR.c' || echo './'`ufInstOgIR.c
+ufInstOgIR.c: In function ‘ufInstOgIRStore’:
+ufInstOgIR.c:130: warning: ‘d’ may be used uninitialized in this function
+mv -f .deps/catchconv_x86_darwin-ufInstOgIR.Tpo .deps/catchconv_x86_darwin-ufInstOgIR.Po
+gcc -DHAVE_CONFIG_H -I. -I..  -I.. -I../include -I../VEX/pub -DVGA_x86=1 -DVGO_darwin=1 -DVGP_x86_darwin=1   -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -MT catchconv_x86_darwin-cgIRCalcCondition.o -MD -MP -MF .deps/catchconv_x86_darwin-cgIRCalcCondition.Tpo -c -o catchconv_x86_darwin-cgIRCalcCondition.o `test -f 'cgIRCalcCondition.c' || echo './'`cgIRCalcCondition.c
+cgIRCalcCondition.c: In function ‘cgEmitCalculateEflagsWork’:
+cgIRCalcCondition.c:277: warning: too many arguments for format
+mv -f .deps/catchconv_x86_darwin-cgIRCalcCondition.Tpo .deps/catchconv_x86_darwin-cgIRCalcCondition.Po
+gcc  -arch i386 -O2 -g -Wmissing-prototypes -Wall -Wshadow -Wpointer-arith -Wstrict-prototypes -Wmissing-declarations -Wno-format-zero-length -fno-strict-aliasing -mmacosx-version-min=10.5 -fno-stack-protector -mdynamic-no-pic -Wno-long-long -Wno-pointer-sign -Wdeclaration-after-statement -fno-stack-protector -nodefaultlibs -nostartfiles -Wl,-u,__start -Wl,-e,__start -Wl,-bind_at_load /usr/lib/dyld -arch i386 -Wl,-seg1addr,0xf0080000 -Wl,-stack_addr,0xf0080000 -Wl,-stack_size,0x80000 -Wl,-pagezero_size,0xf0000000  -o catchconv-x86-darwin catchconv_x86_darwin-ca_main.o catchconv_x86_darwin-cgIR.o catchconv_x86_darwin-cgIRUnop.o catchconv_x86_darwin-cgIRBinop.o catchconv_x86_darwin-ogIR.o catchconv_x86_darwin-isIR.o catchconv_x86_darwin-ca_malloc_wrappers.o catchconv_x86_darwin-ca_interval_dumb.o catchconv_x86_darwin-ca_callbacks.o catchconv_x86_darwin-trackmemIR.o catchconv_x86_darwin-findRepMov.o catchconv_x86_darwin-ufOgIR.o catchconv_x86_darwin-ufInstOgIR.o catchconv_x86_darwin-cgIRCalcCondition.o ../coregrind/libcoregrind-x86-darwin.a ../VEX/libvex-x86-darwin.a -lgcc 
+Undefined symbols:
+  "_mkIRExprVec_10", referenced from:
+      _cgAddTmpCCall in catchconv_x86_darwin-cgIRCalcCondition.o
+  "_mkIRExprVec_9", referenced from:
+      _cgAddTmpCCall in catchconv_x86_darwin-cgIRCalcCondition.o
+ld: symbol(s) not found
+collect2: ld returned 1 exit status
+make[1]: *** [catchconv-x86-darwin] Error 1
+make: *** [all-recursive] Error 1

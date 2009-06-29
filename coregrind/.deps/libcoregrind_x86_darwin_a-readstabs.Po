@@ -1,0 +1,86 @@
+libcoregrind_x86_darwin_a-readstabs.o \
+  libcoregrind_x86_darwin_a-readstabs.o: m_debuginfo/readstabs.c \
+  pub_core_basics.h ../include/pub_tool_basics.h \
+  ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../VEX/pub/libvex.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_ir.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_guest_x86.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_emwarn.h /usr/include/setjmp.h \
+  /usr/include/machine/setjmp.h /usr/include/i386/setjmp.h \
+  /usr/include/sys/cdefs.h pub_core_debuginfo.h \
+  ../include/pub_tool_debuginfo.h pub_core_libcbase.h \
+  ../include/pub_tool_libcbase.h pub_core_libcassert.h \
+  ../include/pub_tool_libcassert.h pub_core_libcprint.h \
+  ../include/pub_tool_libcprint.h pub_core_xarray.h \
+  ../include/pub_tool_xarray.h m_debuginfo/priv_misc.h \
+  m_debuginfo/priv_tytypes.h m_debuginfo/priv_d3basics.h \
+  m_debuginfo/priv_storage.h m_debuginfo/priv_readstabs.h \
+  /usr/include/mach-o/nlist.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h
+
+pub_core_basics.h:
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../VEX/pub/libvex.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_ir.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_guest_x86.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_emwarn.h:
+
+/usr/include/setjmp.h:
+
+/usr/include/machine/setjmp.h:
+
+/usr/include/i386/setjmp.h:
+
+/usr/include/sys/cdefs.h:
+
+pub_core_debuginfo.h:
+
+../include/pub_tool_debuginfo.h:
+
+pub_core_libcbase.h:
+
+../include/pub_tool_libcbase.h:
+
+pub_core_libcassert.h:
+
+../include/pub_tool_libcassert.h:
+
+pub_core_libcprint.h:
+
+../include/pub_tool_libcprint.h:
+
+pub_core_xarray.h:
+
+../include/pub_tool_xarray.h:
+
+m_debuginfo/priv_misc.h:
+
+m_debuginfo/priv_tytypes.h:
+
+m_debuginfo/priv_d3basics.h:
+
+m_debuginfo/priv_storage.h:
+
+m_debuginfo/priv_readstabs.h:
+
+/usr/include/mach-o/nlist.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h:

@@ -1,0 +1,32 @@
+helgrind_x86_darwin-hg_lock_n_thread.o \
+  helgrind_x86_darwin-hg_lock_n_thread.o: hg_lock_n_thread.c \
+  ../include/pub_tool_basics.h ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../include/pub_tool_libcbase.h ../include/pub_tool_libcassert.h \
+  ../include/pub_tool_execontext.h ../include/pub_tool_threadstate.h \
+  ../include/pub_tool_wordfm.h hg_basics.h hg_wordset.h \
+  hg_lock_n_thread.h
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../include/pub_tool_libcbase.h:
+
+../include/pub_tool_libcassert.h:
+
+../include/pub_tool_execontext.h:
+
+../include/pub_tool_threadstate.h:
+
+../include/pub_tool_wordfm.h:
+
+hg_basics.h:
+
+hg_wordset.h:
+
+hg_lock_n_thread.h:

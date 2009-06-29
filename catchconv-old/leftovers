@@ -1,0 +1,920 @@
+
+
+void cgEmitPutTmpStmt_8bit (HWord putOffset, HWord tagVal, HWord tmpName, IRType ty)
+{
+	ULong n_old_mach_state_instance;
+	HWord numBytes;
+	HWord curOffset; 
+
+	switch (ty)
+	  {
+	  case (Ity_I32):
+	    numBytes = 4; 
+	    break; 
+	  case (Ity_I16):
+	    numBytes = 2; 
+	    break; 
+	  case (Ity_I8):
+	    numBytes = 1; 
+	    break; 
+	  default:
+	    numBytes = 4; 
+	    VG_(printf)("XXX Unhandled IRType in cgEmitPutTmpStmt ");
+	    ppIRType(ty); 
+	    VG_(printf)(" \n"); 
+	    break; 
+	  }
+
+	for (curOffset = putOffset; curOffset < putOffset+numBytes;curOffset++)
+	  {
+	    
+	    n_old_mach_state_instance = n_mach_state_instance;
+	    n_mach_state_instance++;
+	    
+	    cgPrintMachState(n_mach_state_instance); 
+	    VG_(printf)(" : ARRAY BITVECTOR(12) OF BITVECTOR(8)"); 
+	    VG_(printf)(" = "); 
+	    cgPrintMachState(n_old_mach_state_instance); 
+	    VG_(printf)(" WITH [0hex"); 
+	    cgPrintHWord(curOffset,3); 
+	    VG_(printf)("] := "); 
+	    cgPrintTmpName(tmpName,tagVal);
+
+	    switch ( (putOffset+numBytes - curOffset) )
+	      {
+	      case 4:
+		VG_(printf)("[31:24]"); 
+		break; 
+	      case 3:
+		VG_(printf)("[23:16]");
+		break;
+	      case 2:
+		VG_(printf)("[15:8]");
+	    break; 
+	      case 1:
+		VG_(printf)("[7:0]"); 
+	    break;
+	      default:
+		VG_(printf)("[ERROR]"); 
+		break;
+	      }
+	    VG_(printf)(";\n"); 
+	  }
+
+	return; 
+}
+
+void cgEmitTmpGetConstraints_8bit(HWord offset, HWord tmpname, HWord tagVal, IRType ty)
+{
+  HWord curOffset;
+  HWord numBytes;
+
+
+    if (isTmpSymbolicP(tagVal,tmpname))
+      {
+
+	switch (ty)
+	  {
+	  case (Ity_I32):
+	    numBytes = 4; 
+	    break; 
+	  case (Ity_I16):
+	    numBytes = 2; 
+	    break; 
+	  case (Ity_I8):
+	    numBytes = 1; 
+	    break; 
+	  default:
+	    numBytes = 4; 
+	    VG_(printf)("XXX Unhandled IRType in cgEmitPutUnconstrained ");
+	  ppIRType(ty); 
+	  VG_(printf)(" \n"); 
+	  break; 
+	  }
+
+     for (curOffset = offset; curOffset < offset+numBytes; curOffset++)
+       {
+      // ASSERT ( CV$tagValt$tmpname = MachState$i[$offset]) 
+      VG_(printf)("ASSERT("); 
+      cgPrintTmpName(tmpname,tagVal); 
+
+	    switch ( (offset+numBytes - curOffset) )
+	      {
+	      case 4:
+		VG_(printf)("[31:24]"); 
+		break; 
+	      case 3:
+		VG_(printf)("[23:16]");
+		break;
+	      case 2:
+		VG_(printf)("[15:8]");
+	    break; 
+	      case 1:
+		VG_(printf)("[7:0]"); 
+	    break;
+	      default:
+		VG_(printf)("[ERROR]"); 
+		break;
+	      }
+
+
+	    VG_(printf)(" = "); 
+	    cgPrintMachState(n_mach_state_instance); 
+	    VG_(printf)("[0hex");
+	    cgPrintHWord(curOffset,3);
+	    VG_(printf)("]);\n"); 
+       }
+      }
+  return; 
+}
+
+
+
+void cgEmitStoreConstConstITE(HWord addr, HWord data)
+{
+  // Push (addr,data) onto stack 
+  cgITEWriteStackNode * newnode; 
+  cgITEWriteStackNode * existnode; 
+
+  ULong n_old_mem_state_instance;
+  caChunkTy * addrChunk; 
+  HWord constSize; 
+  HWord arraySize; 
+  HWord addrOffset; 
+
+
+  newnode = VG_(malloc)(sizeof(cgITEWriteStackNode)); 
+  
+  newnode->key = addr;
+  newnode->ty = ConstConst; 
+  newnode->addrName = addr; 
+  newnode->addrBBCounter = 0; 
+  newnode->addrExecCounter = 0; 
+  newnode->valName = data;
+  newnode->valBBCounter = 0; 
+  newnode->valExecCounter = 0;
+
+  existnode = VG_(HT_lookup)(cgITEWriteStackMemSt,addr);
+  if (existnode)
+    {
+      existnode = VG_(HT_remove)(cgITEWriteStackMemSt,addr);  
+      // free existnode ? 
+    }
+
+  VG_(HT_add_node)(cgITEWriteStackMemSt,newnode); 
+
+	addrChunk = caAddrToChunk(addr,caIntervalTable);       
+
+	if (addrChunk)
+	  {
+	    n_old_mem_state_instance = addrChunk->n_instance;
+	    addrChunk->n_instance++; 
+	    constSize = (addrChunk->regSize)/4;
+	    arraySize = addrChunk->regSize; 
+	    addrOffset = addr - addrChunk->baseAddr;
+	  }
+	else
+	  {
+	    n_old_mem_state_instance = n_mem_state_instance;
+	    n_mem_state_instance++; 
+	    constSize = 8; 
+	    arraySize = 32; 
+	    addrOffset = addr; 
+	  }
+
+      if (addrChunk)
+	{
+	  cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	}
+      else
+	{
+	  cgPrintMemState(n_mem_state_instance); 
+	}
+
+	VG_(printf)(" : ARRAY BITVECTOR(%u) OF BITVECTOR(32);\n", arraySize);
+
+
+      
+	VG_(printf)("ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" : BITVECTOR(%u);\n", arraySize); 
+	
+	VG_(printf)("ASSERT(");
+
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+
+	//ASSERT(A[J] = IF (J=I) THEN V ELSE B[J] ENDIF);
+	VG_(printf)("[ARRAYREST%x",n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("] = ");
+	VG_(printf)(" IF ");
+	
+	VG_(printf)(" ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" = ");
+
+	VG_(printf)("0hex"); 
+	cgPrintHWord(addrOffset,constSize); 
+
+	VG_(printf)(" THEN "); 
+	VG_(printf)("0hex");
+	cgPrintHWord(data,8);
+	VG_(printf)(" ELSE "); 
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(n_old_mem_state_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_old_mem_state_instance);
+        }
+	VG_(printf)("[ARRAYREST%x", n_old_mem_state_instance); 
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("]"); 
+	VG_(printf)("ENDIF );\n");
+
+
+  return; 
+}
+
+
+void cgEmitStoreTmpConstITE (HWord addr, HWord addrTmp, HWord tagVal, HWord data)
+{
+  // Push (addr,data) onto stack 
+  cgITEWriteStackNode * newnode; 
+  cgITEWriteStackNode * existnode; 
+  HWord newkey; 
+
+  ULong n_old_mem_state_instance;
+  caChunkTy * addrChunk; 
+  HWord constSize; 
+  HWord arraySize; 
+  HWord addrOffset; 
+
+  newnode = VG_(malloc)(sizeof(cgITEWriteStackNode)); 
+
+  newkey = locToHashKey(addrTmp,tagVal,TmpLoc);  
+  newnode->key = newkey;
+
+  newnode->ty = TmpConst; 
+  newnode->addrName = addrTmp; 
+  newnode->addrBBCounter = tagVal; 
+  newnode->addrExecCounter = cgBBExecCounter; 
+  newnode->valName = data;
+  newnode->valBBCounter = 0; 
+  newnode->valExecCounter = 0;
+
+  existnode = VG_(HT_lookup)(cgITEWriteStackMemSt,addr);
+  if (existnode)
+    {
+      existnode = VG_(HT_remove)(cgITEWriteStackMemSt,addr);  
+      // free existnode ? 
+    }
+
+  VG_(HT_add_node)(cgITEWriteStackMemSt,newnode); 
+
+
+	addrChunk = caAddrToChunk(addr,caIntervalTable);       
+
+	if (addrChunk)
+	  {
+	    n_old_mem_state_instance = addrChunk->n_instance;
+	    addrChunk->n_instance++; 
+	    constSize = (addrChunk->regSize)/4;
+	    arraySize = addrChunk->regSize; 
+	    addrOffset = addr - addrChunk->baseAddr;
+	  }
+	else
+	  {
+	    n_old_mem_state_instance = n_mem_state_instance;
+	    n_mem_state_instance++; 
+	    constSize = 8; 
+	    arraySize = 32; 
+	    addrOffset = addr; 
+	  }
+
+      if (addrChunk)
+	{
+	  cgEmitTmpOffsetConstraints(addrChunk,addrTmp,tagVal);
+	  cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	}
+      else
+	{
+	  cgPrintMemState(n_mem_state_instance); 
+	}
+
+	VG_(printf)(" : ARRAY BITVECTOR(%u) OF BITVECTOR(32);\n", arraySize);
+
+
+      
+	VG_(printf)("ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" : BITVECTOR(%u);\n", arraySize); 
+	
+	VG_(printf)("ASSERT(");
+
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+
+	//ASSERT(A[J] = IF (J=I) THEN V ELSE B[J] ENDIF);
+	VG_(printf)("[ARRAYREST%x",n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("] = ");
+	VG_(printf)(" IF ");
+	
+	VG_(printf)(" ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" = ");
+	cgPrintTmpName(addrTmp,tagVal);
+	if (addrChunk) VG_(printf)("OFFSET");
+	VG_(printf)(" THEN ");
+	VG_(printf)("0hex"); 
+	cgPrintHWord(data,8);
+	VG_(printf)(" ELSE "); 
+	if (addrChunk)
+	  {
+	cgPrintMemRegionState(n_old_mem_state_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_old_mem_state_instance);
+        }
+	VG_(printf)("[ARRAYREST%x", n_old_mem_state_instance); 
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("]"); 
+	VG_(printf)("ENDIF );\n");
+
+
+
+
+  return; 
+}
+
+
+void cgEmitStoreConstTmpITE(HWord addr, HWord tagVal, HWord dataTmp)
+{
+  // Push (addr,data) onto stack 
+  cgITEWriteStackNode * newnode; 
+  cgITEWriteStackNode * existnode; 
+
+  ULong n_old_mem_state_instance;
+  caChunkTy * addrChunk; 
+  HWord constSize; 
+  HWord arraySize; 
+  HWord addrOffset; 
+
+  newnode = VG_(malloc)(sizeof(cgITEWriteStackNode)); 
+  
+  newnode->key = addr;
+  newnode->ty = ConstTmp; 
+  newnode->addrName = addr; 
+  newnode->addrBBCounter = 0; 
+  newnode->addrExecCounter = 0; 
+  newnode->valName = dataTmp;
+  newnode->valBBCounter = tagVal; 
+  newnode->valExecCounter = cgBBExecCounter;
+
+  existnode = VG_(HT_lookup)(cgITEWriteStackMemSt,addr);
+  if (existnode)
+    {
+      existnode = VG_(HT_remove)(cgITEWriteStackMemSt,addr);  
+      // free existnode ? 
+    }
+
+  VG_(HT_add_node)(cgITEWriteStackMemSt,newnode); 
+
+
+	addrChunk = caAddrToChunk(addr,caIntervalTable);       
+
+	if (addrChunk)
+	  {
+	    n_old_mem_state_instance = addrChunk->n_instance;
+	    addrChunk->n_instance++; 
+	    constSize = (addrChunk->regSize)/4;
+	    arraySize = addrChunk->regSize; 
+	    addrOffset = addr - addrChunk->baseAddr;
+	  }
+	else
+	  {
+	    n_old_mem_state_instance = n_mem_state_instance;
+	    n_mem_state_instance++; 
+	    constSize = 8; 
+	    arraySize = 32; 
+	    addrOffset = addr; 
+	  }
+
+      if (addrChunk)
+	{
+	  cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	}
+      else
+	{
+	  cgPrintMemState(n_mem_state_instance); 
+	}
+
+	VG_(printf)(" : ARRAY BITVECTOR(%u) OF BITVECTOR(32);\n", arraySize);
+
+
+      
+	VG_(printf)("ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" : BITVECTOR(%u);\n", arraySize); 
+	
+	VG_(printf)("ASSERT(");
+
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+
+	//ASSERT(A[J] = IF (J=I) THEN V ELSE B[J] ENDIF);
+	VG_(printf)("[ARRAYREST%x",n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("] = ");
+	VG_(printf)(" IF ");
+	
+	VG_(printf)(" ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" = ");
+
+	VG_(printf)("0hex"); 
+	cgPrintHWord(addrOffset,constSize); 
+
+	VG_(printf)(" THEN "); 
+	cgPrintTmpName(dataTmp,tagVal);
+	VG_(printf)(" ELSE "); 
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(n_old_mem_state_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_old_mem_state_instance);
+        }
+	VG_(printf)("[ARRAYREST%x", n_old_mem_state_instance); 
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("]"); 
+	VG_(printf)("ENDIF );\n");
+
+
+
+  return; 
+}
+
+
+void cgEmitStoreTmpTmpITE(HWord addr, HWord addrTmp, HWord tagVal, HWord dataTmp)
+{
+  // Push (addr,data) onto stack 
+  cgITEWriteStackNode * newnode; 
+  cgITEWriteStackNode * existnode; 
+  HWord newkey; 
+
+  ULong n_old_mem_state_instance;
+  caChunkTy * addrChunk; 
+  HWord constSize; 
+  HWord arraySize; 
+  HWord addrOffset; 
+
+
+  newnode = VG_(malloc)(sizeof(cgITEWriteStackNode)); 
+
+  newkey = locToHashKey(addrTmp,tagVal,TmpLoc);  
+  newnode->key = newkey;
+
+  newnode->ty = TmpTmp; 
+  newnode->addrName = addrTmp; 
+  newnode->addrBBCounter = tagVal; 
+  newnode->addrExecCounter = cgBBExecCounter; 
+  newnode->valName = dataTmp;
+  newnode->valBBCounter = tagVal; 
+  newnode->valExecCounter = cgBBExecCounter;
+
+  existnode = VG_(HT_lookup)(cgITEWriteStackMemSt,addr);
+  if (existnode)
+    {
+      existnode = VG_(HT_remove)(cgITEWriteStackMemSt,addr);  
+      // free existnode ? 
+    }
+
+  VG_(HT_add_node)(cgITEWriteStackMemSt,newnode); 
+
+
+
+	addrChunk = caAddrToChunk(addr,caIntervalTable);       
+
+	if (addrChunk)
+	  {
+	    n_old_mem_state_instance = addrChunk->n_instance;
+	    addrChunk->n_instance++; 
+	    constSize = (addrChunk->regSize)/4;
+	    arraySize = addrChunk->regSize; 
+	    addrOffset = addr - addrChunk->baseAddr;
+	  }
+	else
+	  {
+	    n_old_mem_state_instance = n_mem_state_instance;
+	    n_mem_state_instance++; 
+	    constSize = 8; 
+	    arraySize = 32; 
+	    addrOffset = addr; 
+	  }
+
+      if (addrChunk)
+	{
+	  cgEmitTmpOffsetConstraints(addrChunk,addrTmp,tagVal);
+	  cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	}
+      else
+	{
+	  cgPrintMemState(n_mem_state_instance); 
+	}
+
+	VG_(printf)(" : ARRAY BITVECTOR(%u) OF BITVECTOR(32);\n", arraySize);
+
+
+      
+	VG_(printf)("ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" : BITVECTOR(%u);\n", arraySize); 
+	
+	VG_(printf)("ASSERT(");
+
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+
+	//ASSERT(A[J] = IF (J=I) THEN V ELSE B[J] ENDIF);
+	VG_(printf)("[ARRAYREST%x",n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("] = ");
+	VG_(printf)(" IF ");
+	
+	VG_(printf)(" ARRAYREST%x", n_old_mem_state_instance);
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)(" = ");
+	cgPrintTmpName(addrTmp,tagVal);
+	if (addrChunk) VG_(printf)("OFFSET");
+	VG_(printf)(" THEN "); 
+	cgPrintTmpName(dataTmp,tagVal);
+	VG_(printf)(" ELSE "); 
+	if (addrChunk)
+	  {
+	   
+	    cgPrintMemRegionState(n_old_mem_state_instance, addrChunk->baseAddr);
+        }
+      else
+        {
+          cgPrintMemState(n_old_mem_state_instance);
+        }
+	VG_(printf)("[ARRAYREST%x", n_old_mem_state_instance); 
+	if (addrChunk) VG_(printf)("base%x", addrChunk->baseAddr); 
+	VG_(printf)("]"); 
+	VG_(printf)("ENDIF );\n");
+
+  return; 
+}
+
+
+
+void cgEmitITELoadConst(HWord addr, HWord lhstmp, HWord tagVal)
+{
+  cgITEWriteStackNode * curNode;
+  HWord addrOffset;
+  HWord addrConstSize; 
+
+  caChunkTy * addrChunk; 
+  HWord arraySize; 
+  unsigned int i;
+  unsigned int numIfs; 
+
+  if (!isTmpSymbolicP(tagVal,lhstmp)) return; 
+
+
+  addrChunk = caAddrToChunk(addr,caIntervalTable);       
+  
+  if (addrChunk)
+    {
+      addrConstSize = (addrChunk->regSize)/4;
+      arraySize = addrChunk->regSize; 
+      addrOffset = addr - addrChunk->baseAddr;
+    }
+  else
+    {  
+      addrConstSize = 8; 
+      arraySize = 32; 
+      addrOffset = addr; 
+    }
+
+  VG_(HT_ResetIter)(cgITEWriteStackMemSt); 
+
+  VG_(printf)("ASSERT("); 
+  cgPrintTmpName(lhstmp,tagVal); 
+  VG_(printf)(" = "); 
+
+  numIfs = 0; 
+
+  for ( curNode = VG_(HT_Next)(cgITEWriteStackMemSt); curNode != NULL; 
+       curNode = VG_(HT_Next)(cgITEWriteStackMemSt) ) 
+    {
+      /* emit some constraints here */ 
+     
+      VG_(printf)("IF (0hex"); 
+      cgPrintHWord(addrOffset,addrConstSize); 
+      VG_(printf)(" = "); 
+      switch (curNode->ty)
+	{
+	case ConstConst:
+
+	  // print i 
+
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->addrName,addrConstSize); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 
+	  
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->valName,addrConstSize);
+	  
+
+	  break; 
+      
+	case ConstTmp:
+
+	  // print i 
+
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->addrName,addrConstSize); 
+
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 	  
+	  cgPrintExtTmpName(curNode->valName,curNode->valBBCounter,
+			    curNode->valExecCounter); 
+
+	  break;
+
+	case TmpConst:
+
+	  // print i 
+	  
+	  cgPrintExtTmpName(curNode->addrName,curNode->addrBBCounter,
+			    curNode->addrExecCounter); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 
+
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->valName,addrConstSize);
+
+	  break; 
+
+	case TmpTmp:
+
+	  // print i 
+
+	  cgPrintExtTmpName(curNode->addrName,curNode->addrBBCounter,
+			    curNode->addrExecCounter); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 	  
+
+	  cgPrintExtTmpName(curNode->valName,curNode->valBBCounter,
+			    curNode->valExecCounter); 
+
+	  break; 
+
+	    
+	default:
+	  VG_(printf)("XXX ERROR in cgEmitITELoadConst\n"); 
+	}
+
+      VG_(printf)(" ELSE ");
+
+
+	// remove after emitting read constraints?
+	//      VG_(HT_remove)(cgITEWriteStackMemSt,curNode->key); 
+
+	numIfs++; 
+    }
+
+	if (addrChunk)
+	  { 
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	  }
+	else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+	VG_(printf)("[0hex"); 
+	cgPrintHWord(addrOffset, addrConstSize);
+	VG_(printf)("] "); 
+
+  for ( i = 0; i < numIfs; i ++)
+    {
+      VG_(printf)(" ENDIF "); 
+    }
+
+  VG_(printf)(");\n"); 
+
+  return; 
+}
+
+void cgEmitITELoadTmp(HWord loadAddr, HWord rhstmp, HWord lhstmp, HWord tagVal, IRType assignTy)
+{
+  cgITEWriteStackNode * curNode;
+  HWord addrOffset;
+  HWord addrConstSize; 
+  HWord addrBase; 
+
+  caChunkTy * addrChunk; 
+  HWord arraySize; 
+  unsigned int i;
+  unsigned int numIfs; 
+
+  if (!isTmpSymbolicP(tagVal,lhstmp)) return; 
+
+
+  addrChunk = caAddrToChunk(loadAddr,caIntervalTable);       
+  
+  if (addrChunk)
+    {
+      addrConstSize = (addrChunk->regSize)/4;
+      arraySize = addrChunk->regSize; 
+      addrOffset = loadAddr - addrChunk->baseAddr;
+      addrBase = addrChunk->baseAddr;
+
+       cgEmitTmpOffsetConstraints(addrChunk,rhstmp,tagVal);
+    }
+  else
+    {  
+      addrConstSize = 8; 
+      arraySize = 32; 
+      addrOffset = loadAddr; 
+      addrBase = 0; 
+    }
+
+  VG_(printf)("XXX addrBase is %x \n",addrBase); 
+
+  VG_(HT_ResetIter)(cgITEWriteStackMemSt); 
+
+  VG_(printf)("ASSERT("); 
+  cgPrintTmpName(lhstmp,tagVal); 
+  VG_(printf)(" = "); 
+
+  numIfs = 0; 
+
+  for ( curNode = VG_(HT_Next)(cgITEWriteStackMemSt); curNode != NULL; 
+       curNode = VG_(HT_Next)(cgITEWriteStackMemSt) ) 
+    {
+      /* emit some constraints here */ 
+
+	  // XXX need to check if the address is in current chunk
+	  // XXX if not, need to go to next 
+     
+      VG_(printf)("IF ("); 
+      cgPrintTmpName(rhstmp,tagVal);  
+      if (addrChunk) VG_(printf)("OFFSET"); 
+      VG_(printf)(" = "); 
+      switch (curNode->ty)
+	{
+	case ConstConst:
+
+	  // print i 
+
+
+
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord((curNode->addrName)-addrBase,addrConstSize); 
+	  // cgPrintHWord(0,addrConstSize);
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 
+	  
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->valName,8);
+	  
+
+	  break; 
+      
+	case ConstTmp:
+
+	  // print i 
+
+	      VG_(printf)("0hex"); 
+	      cgPrintHWord(curNode->addrName,addrConstSize); 
+	      // cgPrintHWord(0,addrConstSize); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 	  
+	  cgPrintExtTmpName(curNode->valName,curNode->valBBCounter,
+			    curNode->valExecCounter); 
+
+	  break;
+
+	case TmpConst:
+
+	  // print i 
+	  
+	  cgPrintExtTmpName(curNode->addrName,curNode->addrBBCounter,
+			    curNode->addrExecCounter); 
+
+	  if (addrChunk) VG_(printf)("OFFSET"); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 
+
+	  VG_(printf)("0hex"); 
+	  cgPrintHWord(curNode->valName,8);
+
+	  break; 
+
+	case TmpTmp:
+
+	  // print i 
+
+	  cgPrintExtTmpName(curNode->addrName,curNode->addrBBCounter,
+			    curNode->addrExecCounter); 
+
+	  if (addrChunk) VG_(printf)("OFFSET"); 
+
+	  VG_(printf)(" ) THEN "); 	  
+
+	  // print v 	  
+
+	  cgPrintExtTmpName(curNode->valName,curNode->valBBCounter,
+			    curNode->valExecCounter); 
+
+	  break; 
+
+	    
+	default:
+	  VG_(printf)("XXX ERROR in cgEmitITELoadConst\n"); 
+	}
+
+      VG_(printf)(" ELSE ");
+
+
+	// remove after emitting read constraints?
+	//      VG_(HT_remove)(cgITEWriteStackMemSt,curNode->key); 
+
+	numIfs++; 
+    }
+
+	if (addrChunk)
+	  { 
+	    cgPrintMemRegionState(addrChunk->n_instance, addrChunk->baseAddr);
+	  }
+	else
+        {
+          cgPrintMemState(n_mem_state_instance);
+        }
+	VG_(printf)("[0hex"); 
+	cgPrintHWord(addrOffset, addrConstSize);
+	VG_(printf)("] "); 
+
+  for ( i = 0; i < numIfs; i ++)
+    {
+      VG_(printf)(" ENDIF "); 
+    }
+
+  VG_(printf)(");\n"); 
+
+  return; 
+}
+

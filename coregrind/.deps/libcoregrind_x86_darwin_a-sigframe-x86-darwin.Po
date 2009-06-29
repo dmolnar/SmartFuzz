@@ -1,0 +1,477 @@
+libcoregrind_x86_darwin_a-sigframe-x86-darwin.o \
+  libcoregrind_x86_darwin_a-sigframe-x86-darwin.o:  \
+ m_sigframe/sigframe-x86-darwin.c pub_core_basics.h \
+  ../include/pub_tool_basics.h ../VEX/pub/libvex_basictypes.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h ../config.h \
+  ../VEX/pub/libvex.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_ir.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_guest_x86.h ../VEX/pub/libvex_basictypes.h \
+  ../VEX/pub/libvex_emwarn.h /usr/include/setjmp.h \
+  /usr/include/machine/setjmp.h /usr/include/i386/setjmp.h \
+  /usr/include/sys/cdefs.h pub_core_vki.h ../include/pub_tool_vki.h \
+  ../include/vki/vki-darwin.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h \
+  /usr/include/sys/types.h /usr/include/sys/appleapiopts.h \
+  /usr/include/machine/types.h /usr/include/i386/types.h \
+  /usr/include/i386/_types.h /usr/include/sys/_types.h \
+  /usr/include/machine/_types.h /usr/include/machine/endian.h \
+  /usr/include/i386/endian.h /usr/include/sys/_endian.h \
+  /usr/include/libkern/_OSByteOrder.h \
+  /usr/include/libkern/i386/_OSByteOrder.h /usr/include/sys/_structs.h \
+  /usr/include/malloc/malloc.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stddef.h \
+  /usr/include/mach/mach_types.h /usr/include/mach/host_info.h \
+  /usr/include/mach/message.h /usr/include/mach/port.h \
+  /usr/include/mach/boolean.h /usr/include/mach/machine/boolean.h \
+  /usr/include/mach/i386/boolean.h /usr/include/mach/machine/vm_types.h \
+  /usr/include/mach/i386/vm_types.h /usr/include/mach/kern_return.h \
+  /usr/include/mach/machine/kern_return.h \
+  /usr/include/mach/i386/kern_return.h /usr/include/mach/vm_statistics.h \
+  /usr/include/mach/machine.h /usr/include/mach/time_value.h \
+  /usr/include/mach/host_notify.h /usr/include/mach/host_special_ports.h \
+  /usr/include/mach/memory_object_types.h /usr/include/mach/vm_prot.h \
+  /usr/include/mach/vm_sync.h /usr/include/mach/vm_types.h \
+  /usr/include/mach/exception_types.h \
+  /usr/include/mach/machine/exception.h \
+  /usr/include/mach/i386/exception.h /usr/include/mach/thread_status.h \
+  /usr/include/mach/machine/thread_status.h \
+  /usr/include/mach/i386/thread_status.h \
+  /usr/include/mach/i386/_structs.h /usr/include/mach/i386/fp_reg.h \
+  /usr/include/mach/i386/thread_state.h /usr/include/i386/eflags.h \
+  /usr/include/mach/machine/thread_state.h \
+  /usr/include/mach/processor_info.h \
+  /usr/include/mach/machine/processor_info.h \
+  /usr/include/mach/i386/processor_info.h /usr/include/mach/task_info.h \
+  /usr/include/mach/policy.h /usr/include/mach/task_policy.h \
+  /usr/include/mach/task_special_ports.h /usr/include/mach/thread_info.h \
+  /usr/include/mach/thread_policy.h \
+  /usr/include/mach/thread_special_ports.h \
+  /usr/include/mach/clock_types.h /usr/include/mach/vm_attributes.h \
+  /usr/include/mach/vm_inherit.h /usr/include/mach/vm_purgable.h \
+  /usr/include/mach/vm_behavior.h /usr/include/mach/vm_region.h \
+  /usr/include/mach/machine/vm_param.h /usr/include/mach/i386/vm_param.h \
+  /usr/include/mach/kmod.h /usr/include/mach/std_types.h \
+  /usr/include/sys/time.h /usr/include/time.h /usr/include/_types.h \
+  /usr/include/_structs.h /usr/include/sys/_select.h \
+  /usr/include/sys/stat.h /usr/include/sys/dirent.h \
+  /usr/include/sys/socket.h /usr/include/machine/_param.h \
+  /usr/include/i386/_param.h /usr/include/sys/un.h \
+  /usr/include/netinet/in.h /usr/include/netinet6/in6.h \
+  /usr/include/net/if.h /usr/include/net/if_var.h \
+  /usr/include/sys/queue.h /usr/include/sys/fcntl.h \
+  /usr/include/sys/mman.h /usr/include/mach/vm_param.h \
+  /usr/include/sys/vmparam.h /usr/include/machine/vmparam.h \
+  /usr/include/i386/vmparam.h /usr/include/sys/resource.h \
+  /usr/include/mach/mach_time.h /usr/include/sys/syslimits.h \
+  /usr/include/sys/param.h /usr/include/machine/param.h \
+  /usr/include/i386/param.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/limits.h \
+  /usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h \
+  /usr/include/limits.h /usr/include/machine/limits.h \
+  /usr/include/i386/limits.h /usr/include/i386/_limits.h \
+  /usr/include/sys/signal.h /usr/include/machine/signal.h \
+  /usr/include/i386/signal.h /usr/include/i386/_structs.h \
+  /usr/include/machine/_structs.h /usr/include/sys/errno.h \
+  /usr/include/sys/poll.h /usr/include/sys/ipc.h /usr/include/sys/sem.h \
+  /usr/include/sys/semaphore.h /usr/include/sys/mount.h \
+  /usr/include/sys/attr.h /usr/include/sys/ucred.h \
+  /usr/include/bsm/audit.h /usr/include/sys/select.h \
+  /usr/include/sys/msgbuf.h /usr/include/sys/shm.h \
+  /usr/include/sys/times.h /usr/include/sys/utsname.h \
+  /usr/include/sys/unistd.h /usr/include/sys/sysctl.h \
+  /usr/include/sys/proc.h /usr/include/sys/lock.h \
+  /usr/include/sys/event.h /usr/include/sys/vm.h /usr/include/sys/ev.h \
+  /usr/include/sys/ptrace.h /usr/include/sys/ttycom.h \
+  /usr/include/sys/ioccom.h /usr/include/sys/filio.h \
+  /usr/include/sys/sockio.h /usr/include/sys/dtrace.h \
+  /usr/include/sys/ioctl.h /usr/include/sys/dtrace_glue.h \
+  /usr/include/sys/ucontext.h /usr/include/sys/termios.h \
+  /usr/include/sys/ttydefaults.h /usr/include/uuid/uuid.h \
+  pub_core_vkiscnums.h pub_core_vkiscnums_asm.h \
+  ../include/pub_tool_vkiscnums_asm.h ../include/vki/vki-scnums-darwin.h \
+  ../include/pub_tool_vkiscnums.h ../include/pub_tool_vkiscnums_asm.h \
+  pub_core_threadstate.h ../include/pub_tool_threadstate.h \
+  pub_core_aspacemgr.h ../include/pub_tool_aspacemgr.h \
+  pub_core_libcbase.h ../include/pub_tool_libcbase.h \
+  pub_core_libcassert.h ../include/pub_tool_libcassert.h \
+  pub_core_libcprint.h ../include/pub_tool_libcprint.h pub_core_machine.h \
+  ../include/pub_tool_machine.h pub_core_options.h \
+  ../include/pub_tool_options.h pub_core_signals.h \
+  ../include/pub_tool_signals.h pub_core_tooliface.h \
+  ../include/pub_tool_tooliface.h ../include/pub_tool_errormgr.h \
+  ../include/pub_tool_execontext.h pub_core_trampoline.h \
+  pub_core_sigframe.h
+
+pub_core_basics.h:
+
+../include/pub_tool_basics.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdarg.h:
+
+../config.h:
+
+../VEX/pub/libvex.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_ir.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_guest_x86.h:
+
+../VEX/pub/libvex_basictypes.h:
+
+../VEX/pub/libvex_emwarn.h:
+
+/usr/include/setjmp.h:
+
+/usr/include/machine/setjmp.h:
+
+/usr/include/i386/setjmp.h:
+
+/usr/include/sys/cdefs.h:
+
+pub_core_vki.h:
+
+../include/pub_tool_vki.h:
+
+../include/vki/vki-darwin.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stdint.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/sys/appleapiopts.h:
+
+/usr/include/machine/types.h:
+
+/usr/include/i386/types.h:
+
+/usr/include/i386/_types.h:
+
+/usr/include/sys/_types.h:
+
+/usr/include/machine/_types.h:
+
+/usr/include/machine/endian.h:
+
+/usr/include/i386/endian.h:
+
+/usr/include/sys/_endian.h:
+
+/usr/include/libkern/_OSByteOrder.h:
+
+/usr/include/libkern/i386/_OSByteOrder.h:
+
+/usr/include/sys/_structs.h:
+
+/usr/include/malloc/malloc.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/stddef.h:
+
+/usr/include/mach/mach_types.h:
+
+/usr/include/mach/host_info.h:
+
+/usr/include/mach/message.h:
+
+/usr/include/mach/port.h:
+
+/usr/include/mach/boolean.h:
+
+/usr/include/mach/machine/boolean.h:
+
+/usr/include/mach/i386/boolean.h:
+
+/usr/include/mach/machine/vm_types.h:
+
+/usr/include/mach/i386/vm_types.h:
+
+/usr/include/mach/kern_return.h:
+
+/usr/include/mach/machine/kern_return.h:
+
+/usr/include/mach/i386/kern_return.h:
+
+/usr/include/mach/vm_statistics.h:
+
+/usr/include/mach/machine.h:
+
+/usr/include/mach/time_value.h:
+
+/usr/include/mach/host_notify.h:
+
+/usr/include/mach/host_special_ports.h:
+
+/usr/include/mach/memory_object_types.h:
+
+/usr/include/mach/vm_prot.h:
+
+/usr/include/mach/vm_sync.h:
+
+/usr/include/mach/vm_types.h:
+
+/usr/include/mach/exception_types.h:
+
+/usr/include/mach/machine/exception.h:
+
+/usr/include/mach/i386/exception.h:
+
+/usr/include/mach/thread_status.h:
+
+/usr/include/mach/machine/thread_status.h:
+
+/usr/include/mach/i386/thread_status.h:
+
+/usr/include/mach/i386/_structs.h:
+
+/usr/include/mach/i386/fp_reg.h:
+
+/usr/include/mach/i386/thread_state.h:
+
+/usr/include/i386/eflags.h:
+
+/usr/include/mach/machine/thread_state.h:
+
+/usr/include/mach/processor_info.h:
+
+/usr/include/mach/machine/processor_info.h:
+
+/usr/include/mach/i386/processor_info.h:
+
+/usr/include/mach/task_info.h:
+
+/usr/include/mach/policy.h:
+
+/usr/include/mach/task_policy.h:
+
+/usr/include/mach/task_special_ports.h:
+
+/usr/include/mach/thread_info.h:
+
+/usr/include/mach/thread_policy.h:
+
+/usr/include/mach/thread_special_ports.h:
+
+/usr/include/mach/clock_types.h:
+
+/usr/include/mach/vm_attributes.h:
+
+/usr/include/mach/vm_inherit.h:
+
+/usr/include/mach/vm_purgable.h:
+
+/usr/include/mach/vm_behavior.h:
+
+/usr/include/mach/vm_region.h:
+
+/usr/include/mach/machine/vm_param.h:
+
+/usr/include/mach/i386/vm_param.h:
+
+/usr/include/mach/kmod.h:
+
+/usr/include/mach/std_types.h:
+
+/usr/include/sys/time.h:
+
+/usr/include/time.h:
+
+/usr/include/_types.h:
+
+/usr/include/_structs.h:
+
+/usr/include/sys/_select.h:
+
+/usr/include/sys/stat.h:
+
+/usr/include/sys/dirent.h:
+
+/usr/include/sys/socket.h:
+
+/usr/include/machine/_param.h:
+
+/usr/include/i386/_param.h:
+
+/usr/include/sys/un.h:
+
+/usr/include/netinet/in.h:
+
+/usr/include/netinet6/in6.h:
+
+/usr/include/net/if.h:
+
+/usr/include/net/if_var.h:
+
+/usr/include/sys/queue.h:
+
+/usr/include/sys/fcntl.h:
+
+/usr/include/sys/mman.h:
+
+/usr/include/mach/vm_param.h:
+
+/usr/include/sys/vmparam.h:
+
+/usr/include/machine/vmparam.h:
+
+/usr/include/i386/vmparam.h:
+
+/usr/include/sys/resource.h:
+
+/usr/include/mach/mach_time.h:
+
+/usr/include/sys/syslimits.h:
+
+/usr/include/sys/param.h:
+
+/usr/include/machine/param.h:
+
+/usr/include/i386/param.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/limits.h:
+
+/usr/lib/gcc/i686-apple-darwin9/4.0.1/include/syslimits.h:
+
+/usr/include/limits.h:
+
+/usr/include/machine/limits.h:
+
+/usr/include/i386/limits.h:
+
+/usr/include/i386/_limits.h:
+
+/usr/include/sys/signal.h:
+
+/usr/include/machine/signal.h:
+
+/usr/include/i386/signal.h:
+
+/usr/include/i386/_structs.h:
+
+/usr/include/machine/_structs.h:
+
+/usr/include/sys/errno.h:
+
+/usr/include/sys/poll.h:
+
+/usr/include/sys/ipc.h:
+
+/usr/include/sys/sem.h:
+
+/usr/include/sys/semaphore.h:
+
+/usr/include/sys/mount.h:
+
+/usr/include/sys/attr.h:
+
+/usr/include/sys/ucred.h:
+
+/usr/include/bsm/audit.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/sys/msgbuf.h:
+
+/usr/include/sys/shm.h:
+
+/usr/include/sys/times.h:
+
+/usr/include/sys/utsname.h:
+
+/usr/include/sys/unistd.h:
+
+/usr/include/sys/sysctl.h:
+
+/usr/include/sys/proc.h:
+
+/usr/include/sys/lock.h:
+
+/usr/include/sys/event.h:
+
+/usr/include/sys/vm.h:
+
+/usr/include/sys/ev.h:
+
+/usr/include/sys/ptrace.h:
+
+/usr/include/sys/ttycom.h:
+
+/usr/include/sys/ioccom.h:
+
+/usr/include/sys/filio.h:
+
+/usr/include/sys/sockio.h:
+
+/usr/include/sys/dtrace.h:
+
+/usr/include/sys/ioctl.h:
+
+/usr/include/sys/dtrace_glue.h:
+
+/usr/include/sys/ucontext.h:
+
+/usr/include/sys/termios.h:
+
+/usr/include/sys/ttydefaults.h:
+
+/usr/include/uuid/uuid.h:
+
+pub_core_vkiscnums.h:
+
+pub_core_vkiscnums_asm.h:
+
+../include/pub_tool_vkiscnums_asm.h:
+
+../include/vki/vki-scnums-darwin.h:
+
+../include/pub_tool_vkiscnums.h:
+
+../include/pub_tool_vkiscnums_asm.h:
+
+pub_core_threadstate.h:
+
+../include/pub_tool_threadstate.h:
+
+pub_core_aspacemgr.h:
+
+../include/pub_tool_aspacemgr.h:
+
+pub_core_libcbase.h:
+
+../include/pub_tool_libcbase.h:
+
+pub_core_libcassert.h:
+
+../include/pub_tool_libcassert.h:
+
+pub_core_libcprint.h:
+
+../include/pub_tool_libcprint.h:
+
+pub_core_machine.h:
+
+../include/pub_tool_machine.h:
+
+pub_core_options.h:
+
+../include/pub_tool_options.h:
+
+pub_core_signals.h:
+
+../include/pub_tool_signals.h:
+
+pub_core_tooliface.h:
+
+../include/pub_tool_tooliface.h:
+
+../include/pub_tool_errormgr.h:
+
+../include/pub_tool_execontext.h:
+
+pub_core_trampoline.h:
+
+pub_core_sigframe.h:

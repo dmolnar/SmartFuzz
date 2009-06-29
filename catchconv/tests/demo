@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if [ -z $STP ]; then
+        echo You need to set the STP environment variable.
+elif [ -z $VALGRIND ]; then
+	echo You need to set the VALGRIND environment variable. 
+else
+echo "Compiling demoprog.c..."
+gcc -static -O0 -g demoprog.c -o demoprog
+echo "Done. Running catchconv on demoprog to generate path condition..."
+$VALGRIND --tool=catchconv --mem-regions=simpletest.memregions -q --log-file-exactly=out ./demoprog 5
+$VALGRIND --tool=catchconv --mem-regions=simpletest.memregions -trace-notbelow=0 --trace-flags=11100000 --log-file-exactly=verbose-latest-out ./demoprog 5
+sed -e s/XXX/%/\g out > out1
+echo "ASSERT(TRUE);" >> out1
+echo "Done. Syntax-checking the result..."
+$STP out1
+echo "Done. Extracting the QUERY generated via type inference..."
+QUERYSTRING=`grep QUERY out1 | cut -d" " -f2 | head -n1` 
+QUERYENUM=`echo $QUERYSTRING | cut -d"e" -f2 | cut -d"t" -f1`
+PCNUM=`grep -n JUMPCOND out1 | grep "ASSERT(JUMPCOND" - | grep e$QUERYENUM - | cut -d":" -f1`
+HEADNUM=$(($PCNUM-1))
+head -n$HEADNUM out1 > out1-query.stp 
+echo $QUERYSTRING >> out1-query.stp
+echo "Done. Running STP on the QUERY (may take 120+ minutes)..."
+echo "You can use tail -f out1-response.stp to see STP's progress."
+$STP -s -p out1-query.stp > out1-response.stp
+echo "Done. (Whew!) Extracting the new test cases..."
+grep INPUT out1-response.stp | cut -d"=" -f2 - | cut -d")" -f1 - | cut -d"x" -f2 - | sort | uniq > newtests
+perl hextoint.pl < newtests > intnewtests
+echo "Done. Now running demoprog on the new test cases."
+echo "If you see a Surprise! then we've won."
+for i in `cat intnewtests` ; do ./demoprog $i; done 
+echo "That's all, folks. Thanks for running the demo. "
+echo "You can see VEX IR and corresponding constraints in verbose-latest-out."
+fi
