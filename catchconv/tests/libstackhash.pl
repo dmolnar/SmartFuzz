@@ -34,10 +34,16 @@ sub fuzzystackhash
     }
     $curframe = 0; 
     $fuzzystring = "";
+
+    $numframes = eval{@$frame}; 
+    if (! defined $numframes)
+    {
+       $numframes = 0; 
+    }
    
     #Depends on perl returning empty string when referencing $curframe
     #that does not exist. 
-    while ($curframe < 3 && ($curframe < @$frame)) 
+    while ($curframe < 3 && $numframes) 
     {
 	$frameobj = $frame->[$curframe]; 	
 	$fuzzystring = $fuzzystring . $frameobj->{'fn'};
